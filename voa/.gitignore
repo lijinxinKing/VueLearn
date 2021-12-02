@@ -15,7 +15,7 @@
 ./voa-server/target
 ./voa-server/.mvn
 ./voa-server/voa-server.iml
-
+../.vscode
 # Package Files #
 *.jar
 *.war
