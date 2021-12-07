@@ -4,7 +4,6 @@ import com.xxxx.server.pojo.Admin;
 import com.xxxx.server.pojo.AdminLoginParam;
 import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.service.IAdminService;
-import com.xxxx.server.service.impl.AdminServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

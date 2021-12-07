@@ -16,13 +16,13 @@ proxyObj['/'] = {
 
 proxyObj['/ws'] = {
     ws: true,
-    target: 'ws://127.0.0.1:8081'
+    target: 'ws://10.119.169.121:8081'
 };
 
 
 module.exports = {
     devServer: {
-        host: '127.0.0.1',
+        host: '10.119.169.121',
         port: 8080,
         proxy: proxyObj
     }

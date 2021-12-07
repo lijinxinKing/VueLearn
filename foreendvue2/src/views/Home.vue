@@ -2,13 +2,13 @@
     <div>
         <el-container>
             <el-header class="homeHeader">
-                <div class="title">云E办</div>
+                <div class="title">联想自动化</div>
                 <div>
                     <el-button icon="el-icon-bell"
                                type="text"
                                size="normal"
                                style="margin-right: 8px;color: black"
-                               @click="goChat"></el-button>
+                               @click="goChat"/>
                     <el-dropdown class="userInfo" @command="commandHandler">
                       <!-- <span class="el-dropdown-link">
                         {{user.name}}<i><img :src="user.userFace"></i>
@@ -44,7 +44,7 @@
                         <el-breadcrumb-item>{{this.$router.currentRoute.name}}</el-breadcrumb-item>
                     </el-breadcrumb>
                     <div class="homeWelcome" v-if="this.$router.currentRoute.path=='/home'">
-                        欢迎来到云E办系统！
+                        欢迎使用联想自动化管理系统！
                     </div>
                     <router-view class="homeRouterView"/>
                 </el-main>
@@ -59,6 +59,14 @@
         data() {
             return {
                 // user: JSON.parse(window.sessionStorage.getItem('user'))
+            }
+        },
+        computed: {
+            routes() {
+                return this.$store.state.routes;
+            },
+            user() {
+                return this.$store.state.currentAdmin;
             }
         },
         methods: {

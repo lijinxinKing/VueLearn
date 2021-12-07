@@ -14,8 +14,6 @@ import java.util.List;
  * <p>
  *  服务类
  * </p>
- *
- * @author zhoubin
  */
 public interface IAdminService extends IService<Admin> {
     /**

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xxxx.server.config.security.component.JwtTokenUtil;
 import com.xxxx.server.mapper.AdminMapper;
+import com.xxxx.server.mapper.RoleMapper;
 import com.xxxx.server.pojo.Admin;
 import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.pojo.Role;
@@ -39,6 +40,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Autowired
     private AdminMapper adminMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
+
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -67,9 +72,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
             return RespBean.error("账号被禁用，请联系管理员！");
         }
         //更新security登录用户对象
-//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails
-//                ,null,userDetails.getAuthorities());
-//        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails
+                ,null,userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         //生成token
         String token = jwtTokenUtil.generateToken(userDetails);
         Map<String,String> tokenMap = new HashMap<>();
@@ -95,7 +100,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
      */
     @Override
     public List<Role> getRoles(Integer adminId) {
-        return null;
+        List<Role> roles = roleMapper.getRoles(adminId);
+        return roles;
     }
 
 

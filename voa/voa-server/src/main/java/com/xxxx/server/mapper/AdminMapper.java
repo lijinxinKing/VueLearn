@@ -14,9 +14,7 @@ import java.util.List;
  *
  * @author zhoubin
  */
-@Mapper
 public interface AdminMapper extends BaseMapper<Admin> {
-
 
     /**
      * 获取所有操作员

@@ -1,9 +1,10 @@
+
 import {getRequest} from "./api";
 
 export const initMenu = (router, store) => {
-    if (store.state.routes.length > 0) {
-        return;
-    }
+    // if (store.state.routes.length > 0) {
+    //     return;
+    // }
 
     getRequest('/system/menu').then(data => {
         if (data) {
@@ -42,17 +43,17 @@ export const formatRoutes = (routes) => {
             component(resolve) {
                 console.log(resolve)
                 if (component.startsWith('Home')) {
-                    // require(['../views/' + component + '.vue'], resolve);
+                    require(['../views/' + component + '.vue'], resolve);
                 } else if (component.startsWith('Emp')) {
-                    // require(['../views/emp/' + component + '.vue'], resolve);
+                    require(['../views/emp/' + component + '.vue'], resolve);
                 } else if (component.startsWith('Per')) {
-                    // require(['../views/per/' + component + '.vue'], resolve);
+                    require(['../views/per/' + component + '.vue'], resolve);
                 } else if (component.startsWith('Sal')) {
-                    // require(['../views/sal/' + component + '.vue'], resolve);
+                    require(['../views/sal/' + component + '.vue'], resolve);
                 } else if (component.startsWith('Sta')) {
-                    // require(['../views/sta/' + component + '.vue'], resolve);
+                    require(['../views/sta/' + component + '.vue'], resolve);
                 } else if (component.startsWith('Sys')) {
-                    // require(['../views/sys/' + component + '.vue'], resolve);
+                    require(['../views/sys/' + component + '.vue'], resolve);
                 }
             }
         }
@@ -60,3 +61,5 @@ export const formatRoutes = (routes) => {
     });
     return fmtRoutes;
 }
+// 导航首位
+// cai
