@@ -29,10 +29,5 @@
 hs_err_pid*
 
 .gitignore
-.idea/
-pom.xml
-voa-server/src/main/java/com/xxxx/yeb/
-voa-server/src/main/resources/config/
-voa-server/src/main/resources/mapper/
 voa-server/target/
 voa-server/voa-server.iml

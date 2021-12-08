@@ -11,12 +11,12 @@
 </template>
 <script>
 export default {
-name: "SysBasic",
-data(){
-return{
-activeName:'PosMana'
-}
-},
+    name: "SysBasic",
+    data(){
+        return{
+            activeName:'PosMana'
+        }
+    }
 }
 </script>
 <style>

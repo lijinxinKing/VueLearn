@@ -23,11 +23,23 @@ Vue.prototype.deleteRequest = deleteRequest;
 Vue.prototype.downloadRequest = downloadRequest;
 
 router.beforeEach((to, from, next) => {
-    if(to.path === '/'){
-        next()
-    } else {
+    if (window.sessionStorage.getItem("tokenStr")) {
         initMenu(router,store)
+        console.log(window.sessionStorage.getItem("user"))
+        if(!window.sessionStorage.getItem("user")) {
+            return getRequest('/admin/info').then(resp=>{
+                if(resp){
+                    window.sessionStorage.setItem("user",JSON.stringify(resp))
+                    console.log(window.sessionStorage.getItem("user"))
+                    next()
+                }
+            });
+        }
         next()
+    }else {
+        if(to.path === '/'){
+            next()
+        } 
     }
 })
 
