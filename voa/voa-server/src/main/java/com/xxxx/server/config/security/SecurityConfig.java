@@ -25,8 +25,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * Security配置类
- *
- * @author zhoubin
  * @since 1.0.0
  */
 @Configuration
@@ -93,6 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers()
                 .cacheControl();
         //添加jwt 登录授权过滤器
+
         http.addFilterBefore(jwtAuthencationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         //添加自定义未授权和未登录结果返回
         http.exceptionHandling()
@@ -105,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService(){
         return username -> {
             Admin admin = adminService.getAdminByUserName(username);
-            if (null!=admin){
+            if (null != admin){
                 admin.setRoles(adminService.getRoles(admin.getId()));
                 return admin;
             }

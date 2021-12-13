@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxxx.server.mapper.ComponentMachineMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xxxx.server.pojo.ComponentMachine">
+        <id column="id" property="id" />
+        <result column="fk_component" property="fkComponent" />
+        <result column="is_ok" property="isOk" />
+        <result column="is_idle" property="isIdle" />
+        <result column="user" property="user" />
+        <result column="current_version" property="currentVersion" />
+        <result column="current_server" property="currentServer" />
+        <result column="comments" property="comments" />
+        <result column="machineName" property="machineName" />
+        <result column="ip" property="ip" />
+        <result column="connected" property="connected" />
+        <result column="running" property="running" />
+        <result column="ctime" property="ctime" />
+        <result column="utime" property="utime" />
+        <result column="report_address" property="reportAddress" />
+    </resultMap>
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ComponentMachines" type="com.xxxx.server.pojo.ComponentMachine" extends="BaseResultMap">
+        <collection property="machines" ofType="com.xxxx.server.pojo.ComponentMachine" javaType="java.util.List">
+            <id column="id" property="id" />
+            <result column="fk_component" property="fkComponent" />
+            <result column="is_ok" property="isOk" />
+            <result column="is_idle" property="isIdle" />
+            <result column="user" property="user" />
+            <result column="current_version" property="currentVersion" />
+            <result column="current_server" property="currentServer" />
+            <result column="comments" property="comments" />
+            <result column="machineName" property="machineName" />
+            <result column="ip" property="ip" />
+            <result column="connected" property="connected" />
+            <result column="running" property="running" />
+            <result column="ctime" property="ctime" />
+            <result column="utime" property="utime" />
+            <result column="report_address" property="reportAddress" />
+        </collection>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, adminId, rid
+    </sql>
+
+    <select id="SelectAllMachineByFKid" resultMap="ComponentMachines">
+        select *from t_component_machine where fk_component = #{fk_component}
+    </select>
+
+    <!-- 获取所有员工(分页) -->
+    <select id="GetMachinesByPage" resultMap="ComponentMachines">
+        SELECT *
+        FROM
+        t_component_machine e
+        WHERE
+        <if test="null!=currentPage and size!=null">
+            limit #{currentPage},#{size}
+        </if>
+    </select>
+
+
+</mapper>
