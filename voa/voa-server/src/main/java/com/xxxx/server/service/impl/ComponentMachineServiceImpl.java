@@ -26,10 +26,10 @@ public class ComponentMachineServiceImpl extends ServiceImpl<ComponentMachineMap
     }
 
     @Override
-    public RespPageBean GetComponentMachinesByPage(Integer currentPage, Integer size, ComponentMachine machine, LocalDate[] beginDateScope) {
+    public RespPageBean GetComponentMachinesByPage(Integer currentPage, Integer size, ComponentMachine machine) {
         //开启分页
         Page<ComponentMachine> page = new Page<>(currentPage, size);
-        IPage<ComponentMachine> machinesByPage = componentMachineMapper.GetMachinesByPage(page, machine, beginDateScope);
+        IPage<ComponentMachine> machinesByPage = componentMachineMapper.GetMachinesByPage(page, machine);
         RespPageBean respPageBean = new RespPageBean(machinesByPage.getTotal(), machinesByPage.getRecords());
         return respPageBean;
     }

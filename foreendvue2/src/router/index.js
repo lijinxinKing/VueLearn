@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import Login from '../views/Login'
 import Home from '../views/Home'
+import AdminInfo from '../views/AdminInfo'
 Vue.use(VueRouter)
 Vue.use(Vuex)
 
@@ -15,7 +16,14 @@ const routes = [
 {
     path: '/home',
     name: 'Home',
-    component: Home
+    component: Home,
+    children:[
+        {
+            path: '/userinfo',
+            name: '个人中心',
+            component: AdminInfo,
+        }
+    ]
 }
 ]
 const router = new VueRouter({

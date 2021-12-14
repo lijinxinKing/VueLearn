@@ -3,12 +3,14 @@
         <el-container>
             <el-header class="homeHeader">
                 <div class="title">联想自动化</div>
-                <el-dropdown>
-                <span class="el-dropdown-link"><i class="el-icon-bell" icon="el-icon-bell"></i></span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>个人中心</el-dropdown-item>
-                    <el-dropdown-item>设置</el-dropdown-item>
-                    <el-dropdown-item>注销登录</el-dropdown-item>
+                <el-dropdown @command="handleClick">
+                    <span class="el-dropdown-link">
+                        <i class="el-icon-bell" icon="el-icon-bell"/>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
+                        <el-dropdown-item command="settings">设置</el-dropdown-item>
+                        <el-dropdown-item command="logout">注销登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </el-header>
@@ -57,10 +59,7 @@
             }
         },
         methods: {
-            goChat() {
-                this.$router.push('/chat');
-            },
-            commandHandler(command) {
+            handleClick(command) {
                 if (command == 'logout') {
                     this.$confirm('此操作将注销登录, 是否继续?', '提示', {
                         confirmButtonText: '确定',
@@ -83,8 +82,10 @@
                         });
                     });
                 }
-                if (command == 'userinfo') {
+                else if (command == 'userinfo') {
                     this.$router.push('/userinfo');
+                }else {
+                    alert("Settings");
                 }
             }
         }
@@ -99,6 +100,10 @@
         justify-content: space-between;
         padding: 0 15px;
         box-sizing: border-box;
+    }
+
+    .homeHeader .userInfo {
+        cursor: pointer;
     }
 
     .homeHeader .title {
@@ -129,5 +134,7 @@
     .homeRouterView {
         margin-top: 10px;
     }
-
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
 </style>

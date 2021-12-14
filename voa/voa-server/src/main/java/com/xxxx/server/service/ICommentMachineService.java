@@ -11,5 +11,5 @@ public interface ICommentMachineService extends IService<ComponentMachine> {
 
     List<ComponentMachine> SelectAllMachineByFKid(int id);
 
-    RespPageBean GetComponentMachinesByPage(Integer currentPage, Integer size, ComponentMachine machine, LocalDate[] beginDateScope);
+    RespPageBean GetComponentMachinesByPage(Integer currentPage, Integer size, ComponentMachine machine);
 }

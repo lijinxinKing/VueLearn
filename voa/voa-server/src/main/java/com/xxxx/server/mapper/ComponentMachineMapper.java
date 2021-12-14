@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xxxx.server.pojo.ComponentMachine;
 import org.apache.ibatis.annotations.Param;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface ComponentMachineMapper extends BaseMapper<ComponentMachine> {
@@ -17,11 +16,8 @@ public interface ComponentMachineMapper extends BaseMapper<ComponentMachine> {
      * 获取所有员工(分页)
      * @param page
      * @param componentMachine
-     * @param beginDateScope
      * @return
      */
-    IPage<ComponentMachine> GetMachinesByPage(Page<ComponentMachine> page,
-                                                       @Param("componentMachine") ComponentMachine componentMachine,
-                                                       @Param("beginDateScope") LocalDate[] beginDateScope);
+    IPage<ComponentMachine> GetMachinesByPage(Page<ComponentMachine> page, @Param("componentMachine") ComponentMachine componentMachine);
 
 }

@@ -31,9 +31,8 @@ public class ComponentController {
     @GetMapping("/")
     public RespPageBean getMachines(@RequestParam(defaultValue = "1") Integer currentPage,
                                     @RequestParam(defaultValue = "10") Integer size,
-                                    ComponentMachine machine,
-                                    LocalDate[] beginDateScope){
-        return commentMachineService.GetComponentMachinesByPage(currentPage,size,machine,beginDateScope);
+                                    ComponentMachine machine){
+        return commentMachineService.GetComponentMachinesByPage(currentPage,size,machine);
     }
 
 }

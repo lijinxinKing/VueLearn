@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("t_component_machine")
+@TableName("t_component_machines")
 @ApiModel(value="Component 机器", description="")
 public class ComponentMachine implements Serializable {
 
@@ -29,46 +29,52 @@ public class ComponentMachine implements Serializable {
     @ApiModelProperty(value = "ComponentID")
     private String fkComponent;
 
-    @ApiModelProperty(value = "手机号码")
+    @ApiModelProperty(value = "IsOK")
     private String isOk;
 
-    @ApiModelProperty(value = "住宅电话")
+    @ApiModelProperty(value = "空闲状态")
     private String isIdle;
 
-    @ApiModelProperty(value = "联系地址")
+    @ApiModelProperty(value = "使用人")
     private String user;
 
-    @ApiModelProperty(value = "是否启用")
+    @ApiModelProperty(value = "版本")
     private Boolean currentVersion;
 
-    @ApiModelProperty(value = "用户名")
+    @ApiModelProperty(value = "Server")
     private String currentServer;
 
     @ApiModelProperty(value = "密码")
     private String comments;
 
-    @ApiModelProperty(value = "用户头像")
+    @ApiModelProperty(value = "机器名称")
     private String machineName;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "IP地址")
     private String ip;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "连接状态")
     private String connected;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "状态")
     private String running;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "创建时间")
     private String ctime;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "修改时间")
     private String utime;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "报告地址")
     private String reportAddress;
 
-    @ApiModelProperty(value = "角色列表")
+    @ApiModelProperty(value = "有效bug数")
+    private String validBugs;
+
+    @ApiModelProperty(value = "机器名")
+    private String deviceName;
+
+    @ApiModelProperty(value = "机器列表")
     @TableField(exist = false)
     private List<ComponentMachine> machines;
 }

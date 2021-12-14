@@ -18,6 +18,8 @@
         <result column="ctime" property="ctime" />
         <result column="utime" property="utime" />
         <result column="report_address" property="reportAddress" />
+        <result column="valid_bug" property="validBug" />
+        <result column="device_name" property="deviceName" />
     </resultMap>
 
 
@@ -39,6 +41,8 @@
             <result column="ctime" property="ctime" />
             <result column="utime" property="utime" />
             <result column="report_address" property="reportAddress" />
+            <result column="valid_bug" property="validBug" />
+            <result column="device_name" property="deviceName" />
         </collection>
     </resultMap>
 
@@ -48,19 +52,12 @@
     </sql>
 
     <select id="SelectAllMachineByFKid" resultMap="ComponentMachines">
-        select *from t_component_machine where fk_component = #{fk_component}
+        select *from t_component_machines where fk_component = #{fk_component}
     </select>
 
     <!-- 获取所有员工(分页) -->
     <select id="GetMachinesByPage" resultMap="ComponentMachines">
-        SELECT *
-        FROM
-        t_component_machine e
-        WHERE
-        <if test="null!=currentPage and size!=null">
-            limit #{currentPage},#{size}
-        </if>
+        select *from t_component_machines
     </select>
-
 
 </mapper>

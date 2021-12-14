@@ -17,7 +17,7 @@
                     <el-button type="primary" @click="showAdvanceSearchVisible = !showAdvanceSearchVisible">
                         <i :class="showAdvanceSearchVisible?'fa fa-angle-double-up':'fa fa-angle-double-down'"
                            aria-hidden="true"></i>
-                        高级搜索
+                        主要操作
                     </el-button>
                 </div>
                 <div>
@@ -45,96 +45,68 @@
             <div v-show="showAdvanceSearchVisible"
                  style="border: 1px solid #409eff;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px">
                 <el-row>
-                    <el-col :span="5">
-                        政治面貌:
-                        <el-select v-model="searchValue.politicId" size="mini" style="width: 130px" placeholder="政治面貌">
-                            <el-option
-                                    v-for="item in politicsstatus"
-                                    :key="item.id"
-                                    :label="item.name"
-                                    :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </el-col>
-                    <el-col :span="4">
-                        民族:
-                        <el-select v-model="searchValue.nationId" size="mini" style="width: 130px" placeholder="民族">
-                            <el-option
-                                    v-for="item in nations"
-                                    :key="item.id"
-                                    :label="item.name"
-                                    :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </el-col>
-                    <el-col :span="4">
-                        职位:
-                        <el-select v-model="searchValue.posId" size="mini" style="width: 130px" placeholder="职位">
-                            <el-option
-                                    v-for="item in positions"
-                                    :key="item.id"
-                                    :label="item.name"
-                                    :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </el-col>
-                    <el-col :span="4">
-                        职称:
-                        <el-select v-model="searchValue.jobLevelId" size="mini" style="width: 130px" placeholder="职位">
-                            <el-option
-                                    v-for="item in joblevels"
-                                    :key="item.id"
-                                    :label="item.name"
-                                    :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </el-col>
-                    <el-col :span="7">
-                        聘用形式:
-                        <el-radio-group v-model="searchValue.engageForm">
-                            <el-radio label="劳动合同">劳动合同</el-radio>
-                            <el-radio label="劳务合同">劳务合同</el-radio>
-                        </el-radio-group>
-                    </el-col>
-                </el-row>
-                <el-row style="margin-top: 10px">
-                    <el-col :span="5">
-                        所属部门:
-                        <el-popover
-                                placement="bottom"
-                                title="请选择部门"
-                                width="200"
-                                trigger="manual"
-                                v-model="visible2">
-                            <el-tree
-                                    :data="allDeps"
-                                    :props="defaultProps"
-                                    default-expand-all
-                                    @node-click="searchHandleNodeClick"></el-tree>
-                            <div slot="reference"
-                                 style="width: 130px;display: inline-flex;border: 1px solid #dedede;height: 24px;border-radius: 5px;cursor: pointer;align-items: center;font-size: 13px;padding-left: 8px;box-sizing: border-box;"
-                                 @click="showDepView2">{{inputDepName}}
-                            </div>
-                        </el-popover>
-                    </el-col>
-                    <el-col :span="10">
-                        入职日期:
-                        <el-date-picker
-                                v-model="searchValue.beginDateScope"
-                                size="mini"
-                                type="daterange"
-                                value-format="yyyy-MM-dd"
-                                unlink-panels
-                                range-separator="至"
-                                start-placeholder="开始日期"
-                                end-placeholder="结束日期">
-                        </el-date-picker>
-                    </el-col>
-                    <el-col :span="5" :offset="4">
-                        <el-button size="mini">取消</el-button>
-                        <el-button @click="initEmps('advanced')" size="mini" icon="el-icon-search" type="primary">搜索
-                        </el-button>
-                    </el-col>
+              <el-form :inline="true" :model="formInline" class="demo-form-inline" style="margin-top: 20px">
+                <el-col>
+                                  <el-form-item>
+                  <el-button
+                    type="primary"
+                    style="margin-right:0.5cm;"
+                    @click="onEventClick($event)"
+                  >Clear Cache</el-button>
+                  <el-button
+                    type="primary"
+                    style="margin-right:0.5cm;"
+                    @click="onEventClick($event)"
+                  >Clear Cache And Reboot</el-button>
+                  <el-button
+                    type="primary"
+                    style="margin-right:0.5cm;"
+                    @click="onEventClick($event)"
+                  >Shut Down
+                  </el-button>
+                  <el-button
+                    type="primary"
+                    style="margin-right:0.5cm;"
+                    @click="onEventClick($event)"
+                  >Update Client
+                  </el-button>
+                </el-form-item>
+                </el-col>
+                <el-col>
+                  <el-form-item>
+                  <el-button
+                    type="primary"
+                    style="margin-right:0.5cm;"
+                    @click="onEventClick($event)"
+                  >Disable System Update
+                  </el-button>
+                  <el-button
+                    type="primary"
+                    style="margin-right:0.5cm;"
+                    @click="onEventClick($event)"
+                  >Enable System Update
+                  </el-button>
+                  <el-button
+                    type="primary"
+                    style="margin-right:0.5cm;"
+                    @click="onEventClick($event)"
+                  >Get Machine Info
+                  </el-button>
+                  <el-button
+                    type="primary"
+                    style="margin-right:0.5cm;"
+                    @click="onEventClick($event)"
+                  >Rerun
+                  </el-button>
+                  <el-button
+                    type="primary"
+                    style="margin-right:0.5cm;"
+                    @click="onEventClick($event)"
+                  >Get Report
+                  </el-button>
+                </el-form-item>
+                </el-col>
+              </el-form>
                 </el-row>
             </div>
         </transition>
@@ -605,9 +577,9 @@
             }
         },
         mounted() {
-            // this.initEmps();
-            this.initData();
-            this.initPositions();
+            this.initEmps();
+            // this.initData();
+            // this.initPositions();
         },
         methods: {
             onSuccess() {
@@ -763,42 +735,43 @@
                 this.initEmps();
             },
             showAddEmpView() {
-                this.title = '添加员工';
+                this.title = '添加机器';
                 this.emp = {
                     id: null,
                     name: '',
-                    gender: '',
-                    birthday: '',
-                    idCard: '',
-                    wedlock: '',
-                    nationId: null,
-                    nativePlace: '',
-                    politicId: null,
-                    email: '',
-                    phone: '',
-                    address: '',
-                    departmentId: null,
-                    jobLevelId: null,
-                    posId: null,
-                    engageForm: '',
-                    tiptopDegree: '',
-                    specialty: '',
-                    school: '',
-                    beginDate: '',
-                    workState: '在职',
-                    workID: '',
-                    contractTerm: null,
-                    conversionTime: '',
-                    notWorkDate: null,
-                    beginContract: '',
-                    endContract: '',
-                    workAge: null,
-                    salaryId: null
+                    ip: '',
+                    fkComponent: '',
+                    user: ''
                 };
                 this.inputDepName = '';
                 this.getMaxWorkID();
                 this.initPositions();
                 this.dialogVisible = true;
+            },
+            onEventClick(event) {
+                if (this.machines.length === 0) {
+                this.runSelectionMessage()
+                return null
+            }
+            if (this.runMachines.length === 0) {
+                this.warningMessage()
+                return null
+            }
+            this.runMachinesType.runType = event.target.innerText
+            this.runMachinesType.machines = this.runMachines
+            console.log(event.target.innerText)
+            this.historyLoading = true
+            const requestUrl = 'autotest/runMachinesType/?'
+            this.getRequest(requestUrl)
+            this.$store
+                .dispatch('autotest/runMachinesType', this.runMachinesType)
+                .then(data => {
+                this.tableDatas = data
+                this.historyLoading = false
+                console.log(this.tableDatas)
+                }).catch(err => {
+                console.log(err)
+                })
             },
             initEmps() {
                 this.loading = true;

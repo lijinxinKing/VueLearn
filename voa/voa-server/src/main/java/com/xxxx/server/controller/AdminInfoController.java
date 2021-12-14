@@ -3,14 +3,17 @@ package com.xxxx.server.controller;
 import com.xxxx.server.pojo.Admin;
 import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.service.IAdminService;
+import com.xxxx.server.utils.FastDFSUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -45,4 +48,11 @@ public class AdminInfoController {
         return adminService.updateAdminPassword(oldPass,pass,adminId);
     }
 
+    @ApiOperation(value = "更新用户头像")
+    @PostMapping("/admin/userface")
+    public RespBean updateAdminUserFace(MultipartFile file, Integer id, Authentication authentication){
+        String[] filePath = FastDFSUtils.upload(file);
+        String url = FastDFSUtils.getTrackerUrl() + filePath[0] + "/" + filePath[1];
+        return adminService.updateAdminUserFace(url,id,authentication);
+    }
 }

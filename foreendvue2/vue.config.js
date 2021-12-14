@@ -4,7 +4,7 @@ proxyObj['/'] = {
     //websocket
     ws: false,
     //目标地址
-    target: 'http://localhost:8081',
+    target: 'http://10.119.169.121:8081',
     //发送请求头host会被设置target
     changeOrigin: true,
     //不重写请求地址
@@ -16,7 +16,7 @@ proxyObj['/'] = {
 
 proxyObj['/ws'] = {
     ws: true,
-    target: 'ws://localhost:8081'
+    target: 'ws://10.119.169.121:8081'
 };
 
 
