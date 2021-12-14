@@ -19,6 +19,12 @@
                            aria-hidden="true"></i>
                         主要操作
                     </el-button>
+                    <el-row style="width: 300px;margin-top: 10px"/>
+                    <el-radio-group>
+                        <el-radio border="1" name="test"/>
+                        
+                        <el-radio border="1" name="test1"/>
+                    </el-radio-group>
                 </div>
                 <div>
                     <el-upload
@@ -35,7 +41,7 @@
                         </el-button>
                     </el-upload>
                     <el-button @click="exportData" type="success" icon="el-icon-download">
-                        导出数据
+                        列出Component
                     </el-button>
                     <el-button type="primary" icon="el-icon-plus" @click="showAddEmpView">添加机器</el-button>
                 </div>
@@ -600,6 +606,9 @@
             },
             exportData() {
                 // this.downloadRequest('/employee/basic/export');
+                this.putRequest('/component/basic/getComponents').then(resp => {
+                    console.log(resp)
+                })
             },
             showEditEmpView(data) {
                 this.title = '编辑员工信息';
