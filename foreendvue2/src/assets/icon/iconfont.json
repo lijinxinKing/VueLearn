@@ -1,0 +1,23 @@
+{
+  "id": "2716280",
+  "name": "test",
+  "font_family": "iconfont-ali",
+  "css_prefix_text": "icon-ali",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "13303541",
+      "name": "log",
+      "font_class": "log",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "4291910",
+      "name": "report-color",
+      "font_class": "report-color",
+      "unicode": "e7e1",
+      "unicode_decimal": 59361
+    }
+  ]
+}

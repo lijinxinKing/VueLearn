@@ -8,32 +8,131 @@
                  ref="loginForm"
                  :model="loginForm"
                  class="loginContainer">
-            <h3 class="loginTitle">系统登录</h3>
+            <el-image :src="lenovologo" style="width: 120px;" />
+            <h3 class="loginTitle">Lenovo Beijing APP Automation</h3>
             <el-form-item prop="username">
                 <el-input type="text" auto-complete="false" v-model="loginForm.username"
                           placeholder="请输入用户名"></el-input>
             </el-form-item>
             <el-form-item prop="password">
                 <el-input type="password" auto-complete="false" v-model="loginForm.password"
-                          placeholder="请输入密码"></el-input>
+                placeholder="请输入密码"></el-input>
             </el-form-item>
-            <!-- <el-form-item prop="code">
-                <el-input type="text" auto-complete="false" v-model="loginForm.code"
-                 placeholder="点击图片更换验证码"
-                          style="width: 250px;margin-right: 5px"></el-input>
-                <img :src="captchaUrl" @click="updateCaptcha">
-            </el-form-item> -->
             <el-checkbox v-model="checked" class="loginRemember">记住我</el-checkbox>
-            <el-button type="primary" style="width: 100%" @click="submitLogin">登录</el-button>
+            <div style="text-align:left">
+        <el-button-group>
+          <el-button :loading="loading" type="primary" plain size="small" style="margin-bottom:30px;float:left" @click="submitLogin">用户登录</el-button>
+          <el-tooltip class="item" effect="dark" content="请选择角色，以便后面接收邮件，另外，请填写联想邮箱。" placement="top-start">
+            <el-button type="primary" plain size="small" style="margin-bottom:30px;float:center" @click="showDialog=true">注册账户</el-button>
+          </el-tooltip>
+        </el-button-group>
+        <el-button type="primary" plain size="small" style="margin-bottom:30px;float:right" @click.native.prevent="handleForget">忘记/修改密码</el-button>
+      </div>
         </el-form>
+      <el-dialog :visible.sync="showDialog">
+      <!-- <social-sign /> -->
+      <div>
+        <div class="title-container">
+          <h5 class="title">账户注册</h5>
+        </div>
+        <div class="title-container">
+          <h6 class="title-notice">（本账户注册用以登录自动化测试平台；注册成功后会发送邮件，请注意查收！）</h6>
+        </div>
+        <div>
+          <el-form ref="dynamicValidateForm" :model="dynamicValidateForm" autocomplete="on" label-position="left" class="authsystem-el-form">
+            <el-form-item
+              prop="loginid"
+            >
+              <span class="svg-container">
+                <svg-icon icon-class="people" />
+              </span>
+              <el-input v-model="dynamicValidateForm.loginid" placeholder="登录用户唯一ID" />
+            </el-form-item>
+            <el-form-item icon-class="people">
+              <el-select
+                v-model="dynamicValidateForm.role"
+                size="mini"
+                placeholder="请选择角色"
+                @change="getChanged($event)"
+              >
+                <el-option
+                  v-for="(item, index) in roleOptions"
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item prop="email">
+              <span class="svg-container">
+                <svg-icon icon-class="email" />
+              </span>
+              <el-input v-model="dynamicValidateForm.email" placeholder="联想邮箱地址,用于发送测试结果" />
+            </el-form-item>
+            <el-form-item
+              prop="password"
+            >
+              <span class="svg-container">
+                <svg-icon icon-class="password" />
+              </span>
+              <el-input v-model="dynamicValidateForm.password" placeholder="密码" show-password />
+            </el-form-item>
+            <el-form-item
+              prop="confirmPassword"
+            >
+              <span class="svg-container">
+                <svg-icon icon-class="password" />
+              </span>
+              <el-input v-model="dynamicValidateForm.confirmPassword" placeholder="确认密码" show-password />
+            </el-form-item>
+          </el-form>
+        </div>
+        <div style="color: #ff0000;">
+          <h6> ( * 密码必须8位以上，并且包含字母、数字、特殊符号 )</h6>
+        </div>
+        <div style="text-align:right">
+          <span slot="footer" class="dialog-footer">
+            <el-button size="small" type="primary" @click.native.prevent="handleRegister">确 定</el-button>
+            <el-button size="small" @click="showDialog = false">取 消</el-button>
+          </span>
+        </div>
+      </div>
+    </el-dialog>
     </div>
 </template>
 
 <script>
-    export default {
+import lenovologo from '@/assets/group_images/LenovoLogo.png'
+  export default {
         name: "Login",
         data() {
             return {
+              lenovologo: lenovologo,
+              // register
+              forgetForm: {
+                loginid: '',
+                email: '',
+                role: '',
+                password: '',
+                confirmPassword: ''
+              },
+              // add
+              dynamicValidateForm: {
+                loginid: '',
+                email: '',
+                role: '',
+                password: '',
+                confirmPassword: ''
+              },
+              roleOptions: [
+                { value: '0',
+                  label: 'AutoTester' },
+                { value: '1',
+                  label: 'PATester' },
+                { value: '2',
+                  label: 'Both Tester' }
+              ],
+              showDialog: false,
                 captchaUrl: '/captcha?time=' + new Date(),
                 loginForm: {
                     username: 'admin',
@@ -44,8 +143,7 @@
                 checked: true,
                 rules: {
                     username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
-                    password: [{required: true, message: '请输入密码', trigger: 'blur'}],
-                    code: [{required: true, message: '请输入验证码', trigger: 'blur'}]
+                    password: [{required: true, message: '请输入密码', trigger: 'blur'}]
                 }
             }
         },
@@ -62,7 +160,6 @@
                             if (resp) {
                                 const tokenStr = resp.obj.tokenHead+resp.obj.token
                                 window.sessionStorage.setItem('tokenStr', tokenStr)
-                                console.log(resp)
                                 this.$router.replace('/home')
                             }
                         })
@@ -74,6 +171,7 @@
             }
         }
     }
+    
 </script>
 
 <style>

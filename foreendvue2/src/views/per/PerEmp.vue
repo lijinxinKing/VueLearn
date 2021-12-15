@@ -20,11 +20,22 @@
                         主要操作
                     </el-button>
                     <el-row style="width: 300px;margin-top: 10px"/>
-                    <el-radio-group>
-                        <el-radio border="1" name="test"/>
-                        
-                        <el-radio border="1" name="test1"/>
-                    </el-radio-group>
+                <div>
+                <template>
+                 <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+                   <el-tab-pane label="Vantage" name="Vantage"></el-tab-pane>
+                   <el-tab-pane label="TPNDA" name="TPNDA"></el-tab-pane>
+                   <el-tab-pane label="Utility" name="Utility"></el-tab-pane>
+                   <el-tab-pane label="Lenovo Smartkey" name="Lenovo Smartkey"></el-tab-pane>
+                 </el-tabs>
+                </template>
+                <el-row style="width: 300px;margin-top: 10px"/>
+                <el-radio-group v-model="componentId" @change="getChanged()">
+                  <el-radio v-for="opt in danoptions[this.radioIndex]" border @change="handleRadioChanges(index,opt.label)" :key="opt.label" :label="opt.label">
+                    {{opt.value}}
+                  </el-radio>
+                </el-radio-group>
+              </div>
                 </div>
                 <div>
                     <el-upload
@@ -542,6 +553,25 @@
                     utim: null,
                     reportAddress: null
                 },
+                      danoptions: [
+            [
+              { label: 1, value: 'HardWare Settings' },
+              { label: 5, value: 'Gaming' },
+              { label: 2, value: 'ITS' },
+              { label: 6, value: 'DPM' }
+            ],
+            [
+              { label: 7, value: 'TPNDA' }
+            ],
+            [
+              { label: 8, value: 'Utility' }
+            ],
+            [
+              { label: 9, value: 'Lenovo Smartkey' }
+            ]
+          ],
+          radioIndex: 0,
+          componentId: 100,
                 rules: {
                     name: [{required: true, message: '请输入员工姓名', trigger: 'blur'}],
                     gender: [{required: true, message: '请输入员工性别', trigger: 'blur'}],
@@ -817,7 +847,31 @@
                         this.total = resp.total
                     }
                 })
-            }
+            },
+        handleClick(tab, event) {
+      console.log(tab, event)
+      switch (tab.name) {
+          case 'Vantage':
+            this.radioIndex = 0
+            this.componentId = 100
+            this.getChanged()
+            break
+          case 'TPNDA':
+            this.radioIndex = 1
+            this.componentId = 7
+            this.getChanged()
+            break
+          case 'Utility':
+            this.radioIndex = 2
+            this.componentId = 8
+            this.getChanged()
+            break
+          default:
+            this.radioIndex = 3
+            this.componentId = 9
+            this.getChanged()
+        }
+    }
         }
     }
 </script>

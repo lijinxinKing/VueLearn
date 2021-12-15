@@ -1,29 +1,23 @@
-let proxyObj = {}
+const port = process.env.port || process.env.npm_config_port || 8089 // dev port
 
-proxyObj['/'] = {
-    //websocket
-    ws: false,
-    //目标地址
-    target: 'http://localhost:8081',
-    //发送请求头host会被设置target
-    changeOrigin: true,
-    //不重写请求地址
-    pathReWrite: {
-        '^/': '/'
-    }
-};
-
-
-proxyObj['/ws'] = {
-    ws: true,
-    target: 'ws://localhost:8081'
-};
-
-
+// All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
-    devServer: {
-        host: 'localhost',
-        port: 8080,
-        proxy: proxyObj
+
+  devServer: {
+    port: port,
+    open: true,
+    overlay: {
+      warnings: false,
+      errors: true
+    },
+    proxy: {
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://localhost:8081`,
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
+      }
     }
+  }
 }

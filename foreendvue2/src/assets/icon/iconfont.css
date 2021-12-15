@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "iconfont-ali"; /* Project id 2716280 */
+  src: url('iconfont.woff2?t=1627891121186') format('woff2'),
+       url('iconfont.woff?t=1627891121186') format('woff'),
+       url('iconfont.ttf?t=1627891121186') format('truetype');
+}
+
+.iconfont-ali {
+  font-family: "iconfont-ali" !important;
+  font-size: 24px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-alilog:before {
+  content: "\e663";
+}
+
+.icon-alireport-color:before {
+  content: "\e7e1";
+}
+
