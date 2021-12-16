@@ -9,4 +9,9 @@ public interface IComponentsService extends IService<Components> {
 
 
     List<Components> GetAllComponent();
+
+    List<Components>GetParentComponent();
+
+    List<Components> GetAllComponentByRoleId(int id);
+
 }

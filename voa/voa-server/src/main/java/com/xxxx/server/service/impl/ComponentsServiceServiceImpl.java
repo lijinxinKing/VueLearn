@@ -19,4 +19,14 @@ public class ComponentsServiceServiceImpl extends ServiceImpl<ComponentsMapper, 
     public List<Components> GetAllComponent() {
         return componentsMapper.GetAllComponent();
     }
+
+    @Override
+    public List<Components> GetParentComponent() {
+        return componentsMapper.GetParentComponent();
+    }
+
+    @Override
+    public List<Components> GetAllComponentByRoleId(int id) {
+        return componentsMapper.GetAllComponentByRoleId(id);
+    }
 }

@@ -40,10 +40,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Autowired
     private AdminMapper adminMapper;
-
     @Autowired
     private RoleMapper roleMapper;
-
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -81,6 +79,18 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         tokenMap.put("token",token);
         tokenMap.put("tokenHead",tokenHead);
         return RespBean.success("登录成功",tokenMap);
+    }
+
+    @Override
+    public RespBean register(String username, String password, String componentId, HttpServletRequest request) {
+
+        Admin admin = new Admin();
+        admin.setPassword(passwordEncoder.encode(password));
+        admin.setUsername(username);
+        admin.setRemark("");
+        admin.setEnabled(true);
+        adminMapper.insert(admin);
+        return RespBean.success("注册成功");
     }
 
     /**

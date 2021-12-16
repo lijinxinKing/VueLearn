@@ -11,7 +11,6 @@
         <result column="isParent" property="isParent" />
     </resultMap>
 
-
     <!-- 通用查询映射结果 -->
     <resultMap id="Components" type="com.xxxx.server.pojo.Components" extends="BaseResultMap">
         <collection property="components" ofType="com.xxxx.server.pojo.Components" javaType="java.util.List">
@@ -25,6 +24,15 @@
     </resultMap>
 
     <select id="GetAllComponent" resultMap="Components">
+        select *from t_component
+    </select>
+
+    <select id="GetParentComponent" resultMap="Components">
+        SELECT * FROM t_component where isParent = 1
+    </select>
+
+    <!--GetAllComponentByRoleId-->
+    <select id="GetAllComponentByRoleId" resultMap="Components">
         select *from t_component
     </select>
 

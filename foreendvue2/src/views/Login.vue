@@ -23,14 +23,13 @@
         <el-button-group>
           <el-button :loading="loading" type="primary" plain size="small" style="margin-bottom:30px;float:left" @click="submitLogin">用户登录</el-button>
           <el-tooltip class="item" effect="dark" content="请选择角色，以便后面接收邮件，另外，请填写联想邮箱。" placement="top-start">
-            <el-button type="primary" plain size="small" style="margin-bottom:30px;float:center" @click="showDialog=true">注册账户</el-button>
+            <el-button type="primary" plain size="small" style="margin-bottom:30px;float:center" @click="registerUser()" >注册账户</el-button>
           </el-tooltip>
         </el-button-group>
         <el-button type="primary" plain size="small" style="margin-bottom:30px;float:right" @click.native.prevent="handleForget">忘记/修改密码</el-button>
       </div>
         </el-form>
       <el-dialog :visible.sync="showDialog">
-      <!-- <social-sign /> -->
       <div>
         <div class="title-container">
           <h5 class="title">账户注册</h5>
@@ -39,51 +38,35 @@
           <h6 class="title-notice">（本账户注册用以登录自动化测试平台；注册成功后会发送邮件，请注意查收！）</h6>
         </div>
         <div>
-          <el-form ref="dynamicValidateForm" :model="dynamicValidateForm" autocomplete="on" label-position="left" class="authsystem-el-form">
-            <el-form-item
-              prop="loginid"
-            >
-              <span class="svg-container">
-                <svg-icon icon-class="people" />
-              </span>
-              <el-input v-model="dynamicValidateForm.loginid" placeholder="登录用户唯一ID" />
+          <el-form ref="dynamicValidateForm" :model="dynamicValidateForm" autocomplete="on" 
+          label-position="left" class="authsystem-el-form">
+            <el-form-item prop="loginid">
+            <el-input v-model="dynamicValidateForm.loginid" placeholder="登录用户唯一ID" />
             </el-form-item>
             <el-form-item icon-class="people">
               <el-select
                 v-model="dynamicValidateForm.role"
                 size="mini"
-                placeholder="请选择角色"
+                placeholder="请选择所属项目"
                 @change="getChanged($event)"
               >
                 <el-option
-                  v-for="(item, index) in roleOptions"
+                  v-for="(item, index) in componentOptions"
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
+                  :label="item.name"
+                  :value="item.id"
                 />
               </el-select>
             </el-form-item>
             <el-form-item prop="email">
-              <span class="svg-container">
-                <svg-icon icon-class="email" />
-              </span>
               <el-input v-model="dynamicValidateForm.email" placeholder="联想邮箱地址,用于发送测试结果" />
             </el-form-item>
-            <el-form-item
-              prop="password"
-            >
-              <span class="svg-container">
-                <svg-icon icon-class="password" />
-              </span>
-              <el-input v-model="dynamicValidateForm.password" placeholder="密码" show-password />
+            <el-form-item prop="password">
+            <el-input v-model="dynamicValidateForm.password" placeholder="密码" show-password />
             </el-form-item>
-            <el-form-item
-              prop="confirmPassword"
-            >
-              <span class="svg-container">
-                <svg-icon icon-class="password" />
-              </span>
-              <el-input v-model="dynamicValidateForm.confirmPassword" placeholder="确认密码" show-password />
+            <el-form-item prop="confirmPassword">
+              <el-input v-model="dynamicValidateForm.confirmPassword" 
+              placeholder="确认密码" show-password />
             </el-form-item>
           </el-form>
         </div>
@@ -92,7 +75,7 @@
         </div>
         <div style="text-align:right">
           <span slot="footer" class="dialog-footer">
-            <el-button size="small" type="primary" @click.native.prevent="handleRegister">确 定</el-button>
+            <el-button size="small" type="primary" @click="handleRegister()">确 定</el-button>
             <el-button size="small" @click="showDialog = false">取 消</el-button>
           </span>
         </div>
@@ -124,15 +107,11 @@ import lenovologo from '@/assets/group_images/LenovoLogo.png'
                 password: '',
                 confirmPassword: ''
               },
-              roleOptions: [
-                { value: '0',
-                  label: 'AutoTester' },
-                { value: '1',
-                  label: 'PATester' },
-                { value: '2',
-                  label: 'Both Tester' }
-              ],
+              componentOptions: [
+                {id:'', name:''}
+               ],
               showDialog: false,
+              getComponentUrl: '',
                 captchaUrl: '/captcha?time=' + new Date(),
                 loginForm: {
                     username: 'admin',
@@ -150,6 +129,33 @@ import lenovologo from '@/assets/group_images/LenovoLogo.png'
         methods: {
             updateCaptcha() {
                 // this.captchaUrl = '/captcha?time=' + new Date();
+            },
+            registerUser(){
+              this.showDialog = true
+              this.getComponents()
+            },
+            getComponents() {
+              this.getRequest('/getParentComponent').then(resp => {
+                this.componentOptions = resp
+                console.log(this.componentOptions[0].name)
+              })
+            },
+            handleRegister(){
+                this.$refs.dynamicValidateForm.validate((valid) => {
+                    if (valid) {
+                        this.loading = true;
+                        this.postRequest('/register', this.dynamicValidateForm).then(resp => {
+                            this.loading = false
+                            if (resp) {
+                                this.$message.console.warn();('请输入！')
+                                this.$router.replace('/')
+                            }
+                        })
+                    } else {
+                        this.$message.error('请输入所有字段！')
+                        return false;
+                    }
+                });
             },
             submitLogin() {
                 this.$refs.loginForm.validate((valid) => {

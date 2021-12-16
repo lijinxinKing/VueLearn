@@ -22,9 +22,6 @@ public class ComponentController {
     @Autowired
     private ICommentMachineService commentMachineService;
 
-    @Autowired
-    private IComponentsService componentsService;
-
     @ApiOperation(value = "通过id查询机器列表")
     @RequestMapping("/selectComponentMachine")
     public List<ComponentMachine> getMenusByAdminId(int id){
@@ -41,11 +38,5 @@ public class ComponentController {
     }
 
 
-    @ApiOperation(value = "通过id查询机器列表")
-    @RequestMapping("/getComponents")
-    public List<Components> GetComponents(){
 
-        return componentsService.GetAllComponent();
-
-    }
 }

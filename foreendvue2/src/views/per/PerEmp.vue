@@ -169,23 +169,18 @@
                         prop="user"
                         label="使用人"
                         align="left"
-                        width="150">
+                        width="100">
                 </el-table-column>
-                <el-table-column
+                <!-- <el-table-column
                         prop="currentVersion"
                         label="版本"
                         width="70">
-                </el-table-column>
-                <el-table-column
+                </el-table-column> -->
+                <!-- <el-table-column
                         prop="currentServer"
                         label="服务器"
-                        width="50">
-                </el-table-column>
-                <el-table-column
-                        prop="comments"
-                        label="Comments"
                         width="80">
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column
                         prop="machineName"
                         label="机器名称"
@@ -195,7 +190,7 @@
                         prop="ip"
                         label="IP地址"
                         align="left"
-                        width="180">
+                        width="120">
                 </el-table-column>
                 <el-table-column
                         prop="connected"
@@ -207,18 +202,18 @@
                         prop="running"
                         label="运行"
                         align="left"
-                        width="270">
+                        width="50">
                 </el-table-column>
                 <el-table-column
                         prop="ctime"
                         label="开始日期"
                         align="left"
-                        width="100">
+                        width="150">
                 </el-table-column>
                 <el-table-column
                         prop="utime"
                         label="结束日期"
-                        width="100">
+                        width="150">
                 </el-table-column>
                 <el-table-column
                         prop="reportAddress1"
@@ -553,7 +548,13 @@
                     utim: null,
                     reportAddress: null
                 },
-                      danoptions: [
+        ComponentData:[
+              { label: 1, value: 'HardWare Settings' },
+              { label: 5, value: 'Gaming' },
+              { label: 2, value: 'ITS' },
+              { label: 6, value: 'DPM' }
+        ],
+        danoptions: [
             [
               { label: 1, value: 'HardWare Settings' },
               { label: 5, value: 'Gaming' },
