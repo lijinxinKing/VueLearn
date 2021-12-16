@@ -10,8 +10,6 @@ public interface ComponentsMapper extends BaseMapper<Components> {
 
     List<Components> GetAllComponent(Integer parentId);
 
-    List<Components> GetAllComponentByRoleId(int id);
-
     List<Components> GetParentComponent();
 
     void deleteDep(Components dep);

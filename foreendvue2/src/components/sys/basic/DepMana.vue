@@ -8,6 +8,7 @@
         <el-tree
                 :data="deps"
                 :props="defaultProps"
+                default-expand-all
                 :filter-node-method="filterNode"
                 :expand-on-click-node="false"
                 ref="tree">
@@ -73,7 +74,7 @@
                     name:''
                 }],
                 defaultProps: {
-                    children: 'children',
+                    children: 'components',
                     label: 'name'
                 },
                 dialogVisible: false,
@@ -168,6 +169,7 @@
                 this.getRequest('/component/basic/getAllComponent').then(resp => {
                     if (resp) {
                         this.deps = resp
+                        console.log(this.deps)
                     }
                 })
             },

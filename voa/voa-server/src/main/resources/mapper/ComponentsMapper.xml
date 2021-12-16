@@ -56,10 +56,10 @@
 <!--        call deleteDep(#{id,mode=IN,jdbcType=INTEGER},#{result,mode=OUT,jdbcType=INTEGER})-->
 <!--    </select>-->
 
-<!--    &lt;!&ndash; 添加部门 &ndash;&gt;-->
-<!--    <select id="addDep" statementType="CALLABLE">-->
-<!--        call addDep(#{name,mode=IN,jdbcType=VARCHAR},#{parentId,mode=IN,jdbcType=INTEGER},#{enabled,mode=IN,jdbcType=BOOLEAN},#{result,mode=OUT,jdbcType=INTEGER},#{id,mode=OUT,jdbcType=INTEGER})-->
-<!--    </select>-->
+    <!-- 添加部门 -->
+    <select id="addComponent" statementType="CALLABLE">
+        call addComponent(#{name,mode=IN,jdbcType=VARCHAR},#{parentId,mode=IN,jdbcType=INTEGER},#{enabled,mode=IN,jdbcType=BOOLEAN},#{result,mode=OUT,jdbcType=INTEGER},#{id,mode=OUT,jdbcType=INTEGER})
+    </select>
 
 <!--    &lt;!&ndash;获取所有部门&ndash;&gt;-->
 <!--    <select id="getAllDepartments" resultMap="DepartmentWithChildren">-->
@@ -69,5 +69,16 @@
 <!--        where parentId = #{parentId}-->
 <!--    </select>-->
 
-
+<!--    create definer=`root`@`localhost` procedure `addComponent` (in cname varchar(32),in parentId int,in enabled boolean,out result int,out result2 int)-->
+<!--    begin-->
+<!--    declare did int;-->
+<!--    declare pDepPath varchar(64);-->
+<!--    insert into t_component set name = cname,parentId = parentId,enabled=enabled;-->
+<!--    select row_count() into result;-->
+<!--    select last_insert_id() into did;-->
+<!--    set result2=did;-->
+<!--    select depPath into pDepPath from t_component where id = parentId;-->
+<!--    update t_component set depPath=concat(pDepPath,'.',did) where id=did;-->
+<!--    update t_component set isParent=true where id=parentId;-->
+<!--    end-->
 </mapper>

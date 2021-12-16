@@ -45,6 +45,7 @@ public class ComponentController {
     @ApiOperation(value = "添加项目")
     @PostMapping("/addComponent")
     public RespBean addDep(@RequestBody Components component){
+        System.out.println(component.toString());
         return componentsService.addComponent(component);
     }
 
