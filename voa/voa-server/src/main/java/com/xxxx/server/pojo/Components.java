@@ -45,4 +45,7 @@ public class Components implements Serializable {
     @TableField(exist = false)
     private List<Components> components;
 
+    @ApiModelProperty(value = "返回结果，存储过程使用")
+    @TableField(exist = false)
+    private Integer result;
 }

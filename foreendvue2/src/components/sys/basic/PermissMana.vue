@@ -66,11 +66,11 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.deleteRequest('/system/basic/permiss/role/' + role.id).then(resp => {
-                        if (resp) {
-                            this.initRoles();
-                        }
-                    })
+                    // this.deleteRequest('/system/basic/permiss/role/' + role.id).then(resp => {
+                    //     if (resp) {
+                    //         this.initRoles();
+                    //     }
+                    // })
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -80,13 +80,13 @@
             },
             doAddRole() {
                 if (this.role.name && this.role.nameZh) {
-                    this.postRequest('/system/basic/permiss/role', this.role).then(resp => {
-                        if (resp) {
-                            this.initRoles();
-                            this.role.name = '';
-                            this.role.nameZh = '';
-                        }
-                    })
+                    // this.postRequest('/system/basic/permiss/role', this.role).then(resp => {
+                    //     if (resp) {
+                    //         this.initRoles();
+                    //         this.role.name = '';
+                    //         this.role.nameZh = '';
+                    //     }
+                    // })
                 } else {
                     this.$message.error('所有字段不能为空！');
                 }

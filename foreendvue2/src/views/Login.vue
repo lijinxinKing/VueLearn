@@ -48,7 +48,6 @@
                 v-model="dynamicValidateForm.role"
                 size="mini"
                 placeholder="请选择所属项目"
-                @change="getChanged($event)"
               >
                 <el-option
                   v-for="(item, index) in componentOptions"

@@ -11,6 +11,11 @@
         <result column="isParent" property="isParent" />
     </resultMap>
 
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, parentId, depPath, enabled, isParent
+    </sql>
+
     <!-- 通用查询映射结果 -->
     <resultMap id="Components" type="com.xxxx.server.pojo.Components" extends="BaseResultMap">
         <collection property="components" ofType="com.xxxx.server.pojo.Components" javaType="java.util.List">
@@ -23,9 +28,11 @@
         </collection>
     </resultMap>
 
-    <select id="GetAllComponent" resultMap="Components">
-        select *from t_component
-    </select>
+    <resultMap id="ComponentWithChildren" type="com.xxxx.server.pojo.Components" extends="BaseResultMap">
+        <collection property="components" ofType="com.xxxx.server.pojo.Components"
+                    select="com.xxxx.server.mapper.ComponentsMapper.GetAllComponent" column="id">
+        </collection>
+    </resultMap>
 
     <select id="GetParentComponent" resultMap="Components">
         SELECT * FROM t_component where isParent = 1
@@ -35,5 +42,32 @@
     <select id="GetAllComponentByRoleId" resultMap="Components">
         select *from t_component
     </select>
+
+    <!--获取所有部门-->
+    <select id="GetAllComponent" resultMap="ComponentWithChildren">
+        select
+        <include refid="Base_Column_List"/>
+        from t_component
+        where parentId = #{parentId}
+    </select>
+
+<!--    &lt;!&ndash; 删除部门 &ndash;&gt;-->
+<!--    <select id="deleteDep" statementType="CALLABLE">-->
+<!--        call deleteDep(#{id,mode=IN,jdbcType=INTEGER},#{result,mode=OUT,jdbcType=INTEGER})-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 添加部门 &ndash;&gt;-->
+<!--    <select id="addDep" statementType="CALLABLE">-->
+<!--        call addDep(#{name,mode=IN,jdbcType=VARCHAR},#{parentId,mode=IN,jdbcType=INTEGER},#{enabled,mode=IN,jdbcType=BOOLEAN},#{result,mode=OUT,jdbcType=INTEGER},#{id,mode=OUT,jdbcType=INTEGER})-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;获取所有部门&ndash;&gt;-->
+<!--    <select id="getAllDepartments" resultMap="DepartmentWithChildren">-->
+<!--        select-->
+<!--        <include refid="Base_Column_List"/>-->
+<!--        from t_department-->
+<!--        where parentId = #{parentId}-->
+<!--    </select>-->
+
 
 </mapper>

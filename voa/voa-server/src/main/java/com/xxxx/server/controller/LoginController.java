@@ -20,9 +20,6 @@ public class LoginController {
     @Autowired
     private IAdminService adminService;
 
-    @Autowired
-    private IComponentsService componentsService;
-
     @ApiOperation(value = "登录之后返回token")
     @PostMapping("/login")
     public RespBean login(@RequestBody AdminLoginParam adminLoginParam,
@@ -57,9 +54,4 @@ public class LoginController {
         return RespBean.success("注销成功！");
     }
 
-    @ApiOperation(value = "查询")
-    @RequestMapping("/getParentComponent")
-    public List<Components> GetComponents(){
-        return componentsService.GetParentComponent();
-    }
 }
