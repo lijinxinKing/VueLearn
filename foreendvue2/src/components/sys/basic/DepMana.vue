@@ -105,13 +105,13 @@
                 for (let i = 0; i < deps.length; i++) {
                     let d = deps[i];
                     if (d.id == dep.parentId) {
-                        d.children = d.children.concat(dep);
-                        if (d.children.length > 0) {
+                        d.components = d.components.concat(dep);
+                        if (d.components.length > 0) {
                             d.isParent = true;
                         }
                         return;
                     } else {
-                        this.addDep2Deps(d.children, dep);
+                        this.addDep2Deps(d.components, dep);
                     }
                 }
             },
@@ -139,7 +139,7 @@
                         }
                         return;
                     } else {
-                        this.removeDepFromDeps(d, d.children, id);
+                        this.removeDepFromDeps(d, d.components, id);
                     }
                 }
             },
@@ -169,7 +169,6 @@
                 this.getRequest('/component/basic/getAllComponent').then(resp => {
                     if (resp) {
                         this.deps = resp
-                        console.log(this.deps)
                     }
                 })
             },

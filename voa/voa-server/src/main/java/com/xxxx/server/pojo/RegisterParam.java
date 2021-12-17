@@ -18,7 +18,7 @@ public class RegisterParam {
     @ApiModelProperty(value = "确认密码",required = true)
     private String confirmPassword;
     @ApiModelProperty(value = "Component",required = true)
-    private int role;
+    private Integer componentId;
     @ApiModelProperty(value = "email",required = true)
     private String email;
 }

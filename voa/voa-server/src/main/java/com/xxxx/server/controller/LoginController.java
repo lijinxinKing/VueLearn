@@ -20,6 +20,9 @@ public class LoginController {
     @Autowired
     private IAdminService adminService;
 
+    @Autowired
+    private IComponentsService componentsService;
+
     @ApiOperation(value = "登录之后返回token")
     @PostMapping("/login")
     public RespBean login(@RequestBody AdminLoginParam adminLoginParam,
@@ -32,7 +35,7 @@ public class LoginController {
     @PostMapping("/register")
     public RespBean register(@RequestBody RegisterParam registerParam,
                           HttpServletRequest request) {
-        return adminService.register(registerParam.getLoginid(), registerParam.getPassword(),registerParam.getConfirmPassword(),request);
+        return adminService.register(registerParam,request);
     }
 
     @ApiOperation(value = "获取当前登录用户的信息")
@@ -54,4 +57,9 @@ public class LoginController {
         return RespBean.success("注销成功！");
     }
 
+    @ApiOperation(value = "查询(用于登录)")
+    @RequestMapping("/getParentComponent")
+    public List<Components> GetComponents(){
+        return componentsService.GetParentComponent();
+    }
 }

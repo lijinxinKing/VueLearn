@@ -3,6 +3,7 @@ package com.xxxx.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xxxx.server.pojo.Admin;
+import com.xxxx.server.pojo.RegisterParam;
 import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.pojo.Role;
 import org.springframework.security.core.Authentication;
@@ -25,7 +26,7 @@ public interface IAdminService extends IService<Admin> {
      */
     RespBean login(String username, String password, HttpServletRequest request);
 
-    RespBean register(String username, String password, String componentId, HttpServletRequest request);
+    RespBean register(RegisterParam registerParam, HttpServletRequest request);
 
     /**
      * 根据用户名获取用户

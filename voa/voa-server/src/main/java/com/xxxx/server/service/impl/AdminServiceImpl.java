@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xxxx.server.config.security.component.JwtTokenUtil;
 import com.xxxx.server.mapper.AdminMapper;
+import com.xxxx.server.mapper.AdminRoleMapper;
 import com.xxxx.server.mapper.RoleMapper;
 import com.xxxx.server.pojo.Admin;
+import com.xxxx.server.pojo.RegisterParam;
 import com.xxxx.server.pojo.RespBean;
 import com.xxxx.server.pojo.Role;
 import com.xxxx.server.service.IAdminService;
@@ -40,8 +42,13 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Autowired
     private AdminMapper adminMapper;
+
     @Autowired
     private RoleMapper roleMapper;
+
+    @Autowired
+    private AdminRoleMapper addAdminRoleMapper;
+
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -82,14 +89,20 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     }
 
     @Override
-    public RespBean register(String username, String password, String componentId, HttpServletRequest request) {
+    public RespBean register(RegisterParam registerParam, HttpServletRequest request) {
 
         Admin admin = new Admin();
-        admin.setPassword(passwordEncoder.encode(password));
-        admin.setUsername(username);
+        admin.setPassword(passwordEncoder.encode(registerParam.getPassword()));
+        admin.setUsername(registerParam.getLoginid());
         admin.setRemark("");
+        admin.setComponentId(registerParam.getComponentId());
         admin.setEnabled(true);
-        adminMapper.insert(admin);
+
+        Integer []rids = {6};
+        // 注册用户 除 管理员访问到的界面 其他功能界面都可以
+        Integer adminId = adminMapper.insert(admin);
+        Admin admin1 = adminMapper.selectOne(new QueryWrapper<Admin>().eq("username",registerParam.getLoginid()));
+        Integer result = addAdminRoleMapper.addAdminRole(admin1.getId(), rids);
         return RespBean.success("注册成功");
     }
 

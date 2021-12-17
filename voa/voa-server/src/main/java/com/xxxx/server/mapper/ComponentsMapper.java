@@ -12,7 +12,7 @@ public interface ComponentsMapper extends BaseMapper<Components> {
 
     List<Components> GetParentComponent();
 
-    void deleteDep(Components dep);
-
     RespBean addComponent(Components component);
+
+    void deleteComponent(Components components);
 }

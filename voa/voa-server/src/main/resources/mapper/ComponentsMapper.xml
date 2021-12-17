@@ -51,10 +51,10 @@
         where parentId = #{parentId}
     </select>
 
-<!--    &lt;!&ndash; 删除部门 &ndash;&gt;-->
-<!--    <select id="deleteDep" statementType="CALLABLE">-->
-<!--        call deleteDep(#{id,mode=IN,jdbcType=INTEGER},#{result,mode=OUT,jdbcType=INTEGER})-->
-<!--    </select>-->
+    <!-- 删除部门 -->
+    <select id="deleteComponent" statementType="CALLABLE">
+        call deleteComponent(#{id,mode=IN,jdbcType=INTEGER},#{result,mode=OUT,jdbcType=INTEGER})
+    </select>
 
     <!-- 添加部门 -->
     <select id="addComponent" statementType="CALLABLE">

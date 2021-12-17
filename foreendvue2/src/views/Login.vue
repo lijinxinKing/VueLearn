@@ -45,7 +45,7 @@
             </el-form-item>
             <el-form-item icon-class="people">
               <el-select
-                v-model="dynamicValidateForm.role"
+                v-model="dynamicValidateForm.componentId"
                 size="mini"
                 placeholder="请选择所属项目"
               >
@@ -102,7 +102,7 @@ import lenovologo from '@/assets/group_images/LenovoLogo.png'
               dynamicValidateForm: {
                 loginid: '',
                 email: '',
-                role: '',
+                componentId: 0,
                 password: '',
                 confirmPassword: ''
               },
@@ -136,13 +136,13 @@ import lenovologo from '@/assets/group_images/LenovoLogo.png'
             getComponents() {
               this.getRequest('/getParentComponent').then(resp => {
                 this.componentOptions = resp
-                console.log(this.componentOptions[0].name)
               })
             },
             handleRegister(){
                 this.$refs.dynamicValidateForm.validate((valid) => {
                     if (valid) {
                         this.loading = true;
+                        console.log(this.dynamicValidateForm.componentId)
                         this.postRequest('/register', this.dynamicValidateForm).then(resp => {
                             this.loading = false
                             if (resp) {

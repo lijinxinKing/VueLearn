@@ -55,10 +55,6 @@ public class ComponentController {
         return componentsService.deleteComponent(id);
     }
 
-    @ApiOperation(value = "查询(用于登录)")
-    @RequestMapping("/getParentComponent")
-    public List<Components> GetComponents(){
-        return componentsService.GetParentComponent();
-    }
+
 
 }

@@ -14,6 +14,7 @@
         <result column="password" property="password" />
         <result column="userFace" property="userFace" />
         <result column="remark" property="remark" />
+        <result column="componentId" property="componentId" />
     </resultMap>
 
     <resultMap id="AdminWithRole" type="com.xxxx.server.pojo.Admin" extends="BaseResultMap">

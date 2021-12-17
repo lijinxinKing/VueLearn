@@ -63,6 +63,9 @@ public class Admin implements Serializable, UserDetails {
     @ApiModelProperty(value = "备注")
     private String remark;
 
+    @ApiModelProperty(value = "备注")
+    private Integer componentId;
+
     @ApiModelProperty(value = "角色")
     @TableField(exist = false)
     private List<Role> roles;
