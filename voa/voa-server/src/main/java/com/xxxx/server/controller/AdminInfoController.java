@@ -19,7 +19,6 @@ import java.util.Map;
 
 /**
  * 个人中心
- *
  * @since 1.0.0
  */
 @RestController

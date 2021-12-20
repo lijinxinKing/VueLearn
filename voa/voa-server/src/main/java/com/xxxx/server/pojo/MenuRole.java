@@ -11,12 +11,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
-/**
- * <p>
- *
- *
- * @author zhoubin
- */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)

@@ -71,12 +71,11 @@ public class Admin implements Serializable, UserDetails {
     private List<Role> roles;
 
     @Override
-    @JsonDeserialize(using = CustomAuthorityDeserializer.class)
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = roles
-                .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
+        List<SimpleGrantedAuthority> authorities =
+                roles.stream()
+                        .map(role -> new SimpleGrantedAuthority(role.getName()))
+                        .collect(Collectors.toList());
         return authorities;
     }
 

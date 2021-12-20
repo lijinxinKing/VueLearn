@@ -14,8 +14,6 @@ import java.util.Collection;
 /**
  * 权限控制
  * 判断用户角色
- *
- * @author zhoubin
  * @since 1.0.0
  */
 @Component

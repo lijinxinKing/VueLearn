@@ -19,8 +19,6 @@ import java.util.List;
 
 /**
  * Swagger2配置类
- *
- * @author zhoubin
  * @since 1.0.0
  */
 @Configuration
@@ -41,8 +39,8 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("云E办接口文档")
-                .description("云E办接口文档")
+                .title("联想自动化接口文档")
+                .description("联想自动化接口文档")
                 .contact(new Contact("xxxx","http:localhost:8081/doc.html","xxxx@xxxx.com"))
                 .version("1.0")
                 .build();

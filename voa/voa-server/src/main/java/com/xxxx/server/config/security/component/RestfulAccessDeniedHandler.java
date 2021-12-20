@@ -14,8 +14,6 @@ import java.io.PrintWriter;
 
 /**
  * 当访问接口没有权限时，自定义返回结果
- *
- * @author zhoubin
  * @since 1.0.0
  */
 @Component

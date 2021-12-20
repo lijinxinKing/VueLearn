@@ -55,9 +55,9 @@
         select *from t_component_machines where fk_component = #{fk_component}
     </select>
 
-    <!-- 获取所有员工(分页) -->
+    <!-- 获取机器(分页) -->
     <select id="GetMachinesByPage" resultMap="ComponentMachines">
-        select *from t_component_machines
+        select *from t_component_machines where fk_component = #{componentId}
     </select>
 
 </mapper>

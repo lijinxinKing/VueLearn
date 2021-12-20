@@ -5,8 +5,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * 操作员工具类
- *
- * @author zhoubin
  * @since 1.0.0
  */
 public class AdminUtils {

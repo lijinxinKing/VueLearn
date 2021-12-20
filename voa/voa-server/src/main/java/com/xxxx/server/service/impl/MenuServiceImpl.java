@@ -17,8 +17,6 @@ import java.util.List;
  * <p>
  *  服务实现类
  * </p>
- *
- * @author zhoubin
  */
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
@@ -63,5 +61,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Override
     public List<Menu> getAllMenus() {
         return menuMapper.getAllMenus();
+    }
+
+    @Override
+    public List<Menu> getAllMenusWithRole() {
+        return menuMapper.getMenusWithRole();
     }
 }

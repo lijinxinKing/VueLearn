@@ -14,8 +14,6 @@ import java.io.PrintWriter;
 
 /**
  * 当未登录或者token失效时访问接口时，自定义的返回结果
- *
- * @author zhoubin
  * @since 1.0.0
  */
 @Component

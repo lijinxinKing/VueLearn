@@ -18,6 +18,6 @@ public interface ComponentMachineMapper extends BaseMapper<ComponentMachine> {
      * @param componentMachine
      * @return
      */
-    IPage<ComponentMachine> GetMachinesByPage(Page<ComponentMachine> page, @Param("componentMachine") ComponentMachine componentMachine);
+    IPage<ComponentMachine> GetMachinesByPage(Page<ComponentMachine> page, @Param("componentMachine") ComponentMachine componentMachine,Integer componentId);
 
 }

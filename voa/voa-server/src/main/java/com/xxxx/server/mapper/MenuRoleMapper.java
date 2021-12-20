@@ -8,8 +8,6 @@ import org.apache.ibatis.annotations.Param;
  * <p>
  *  Mapper 接口
  * </p>
- *
- * @author zhoubin
  */
 public interface MenuRoleMapper extends BaseMapper<MenuRole> {
 

@@ -10,7 +10,6 @@ import com.xxxx.server.service.ICommentMachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -26,10 +25,10 @@ public class ComponentMachineServiceImpl extends ServiceImpl<ComponentMachineMap
     }
 
     @Override
-    public RespPageBean GetComponentMachinesByPage(Integer currentPage, Integer size, ComponentMachine machine) {
+    public RespPageBean GetComponentMachinesByPage(Integer currentPage, Integer size, ComponentMachine machine,Integer componentId) {
         //开启分页
         Page<ComponentMachine> page = new Page<>(currentPage, size);
-        IPage<ComponentMachine> machinesByPage = componentMachineMapper.GetMachinesByPage(page, machine);
+        IPage<ComponentMachine> machinesByPage = componentMachineMapper.GetMachinesByPage(page, machine,componentId);
         RespPageBean respPageBean = new RespPageBean(machinesByPage.getTotal(), machinesByPage.getRecords());
         return respPageBean;
     }

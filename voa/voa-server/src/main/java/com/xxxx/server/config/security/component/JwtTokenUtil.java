@@ -13,8 +13,6 @@ import java.util.Map;
 
 /**
  * JwtToken工具类
- *
- * @author zhoubin
  * @since 1.0.0
  */
 @Component

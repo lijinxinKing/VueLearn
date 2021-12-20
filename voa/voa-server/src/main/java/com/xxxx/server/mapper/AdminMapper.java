@@ -10,8 +10,6 @@ import java.util.List;
  * <p>
  *  Mapper 接口
  * </p>
- *
- * @author zhoubin
  */
 public interface AdminMapper extends BaseMapper<Admin> {
 

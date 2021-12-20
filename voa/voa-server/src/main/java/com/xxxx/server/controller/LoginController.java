@@ -23,6 +23,8 @@ public class LoginController {
     @Autowired
     private IComponentsService componentsService;
 
+    private Integer adminId;
+
     @ApiOperation(value = "登录之后返回token")
     @PostMapping("/login")
     public RespBean login(@RequestBody AdminLoginParam adminLoginParam,

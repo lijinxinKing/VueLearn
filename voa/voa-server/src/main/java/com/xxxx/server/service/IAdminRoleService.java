@@ -7,8 +7,6 @@ import com.xxxx.server.pojo.AdminRole;
  * <p>
  *  服务类
  * </p>
- *
- * @author zhoubin
  */
 public interface IAdminRoleService extends IService<AdminRole> {
 

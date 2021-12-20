@@ -30,8 +30,9 @@
                  </el-tabs>
                 </template>
                 <el-row style="width: 300px;margin-top: 10px"/>
+                <!-- @change="handleRadioChanges(index,opt.label)" -->
                 <el-radio-group v-model="componentId" @change="getChanged()">
-                  <el-radio v-for="opt in danoptions[this.radioIndex]" border @change="handleRadioChanges(index,opt.label)" :key="opt.label" :label="opt.label">
+                  <el-radio v-for="opt in danoptions" border :key="opt.label" :label="opt.label">
                     {{opt.value}}
                   </el-radio>
                 </el-radio-group>
@@ -62,7 +63,8 @@
             <div v-show="showAdvanceSearchVisible"
                  style="border: 1px solid #409eff;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px">
                 <el-row>
-              <el-form :inline="true" :model="formInline" class="demo-form-inline" style="margin-top: 20px">
+                    <!-- :model="formInline" -->
+              <el-form :inline="true"  class="demo-form-inline" style="margin-top: 20px">
                 <el-col>
                                   <el-form-item>
                   <el-button
@@ -491,17 +493,17 @@
 
 <script>
     export default {
-        name: "EmpBasic",
+        name: "ComponentBasic",
         data() {
             return {
                 searchValue: {
-                    politicId: null,
-                    nationId: null,
-                    posId: null,
-                    jobLevelId: null,
+                    politicId: [],
+                    nationId: [],
+                    posId: [],
+                    jobLevelId: [],
                     engageForm: '',
-                    departmentId: null,
-                    beginDateScope: null
+                    departmentId: [],
+                    beginDateScope: []
                 },
                 showAdvanceSearchVisible: false,
                 headers: {
@@ -530,23 +532,24 @@
                 joblevels: [],
                 politicsstatus: [],
                 positions: [],
+                activeName: '',
                 tiptopDegrees: ['博士', '硕士', '本科', '大专', '高中', '初中', '小学', '其他'],
                 emp: {
-                    id: null,
+                    id: [],
                     fkComponent: '',
                     isOk: '',
                     isIdle: '',
                     user: '',
                     currentVersion: '',
-                    currentServer: null,
+                    currentServer: [],
                     commnets: '',
-                    machineName: null,
+                    machineName: [],
                     ip: '',
                     connected: '',
                     running: '',
-                    ctime: null,
-                    utim: null,
-                    reportAddress: null
+                    ctime: [],
+                    utim: [],
+                    reportAddress: []
                 },
         ComponentData:[
               { label: 1, value: 'HardWare Settings' },
@@ -555,22 +558,8 @@
               { label: 6, value: 'DPM' }
         ],
         danoptions: [
-            [
-              { label: 1, value: 'HardWare Settings' },
-              { label: 5, value: 'Gaming' },
-              { label: 2, value: 'ITS' },
-              { label: 6, value: 'DPM' }
+            { label: 'id', value: 'name' }
             ],
-            [
-              { label: 7, value: 'TPNDA' }
-            ],
-            [
-              { label: 8, value: 'Utility' }
-            ],
-            [
-              { label: 9, value: 'Lenovo Smartkey' }
-            ]
-          ],
           radioIndex: 0,
           componentId: 100,
                 rules: {
@@ -615,10 +604,19 @@
         },
         mounted() {
             this.initEmps();
+            this.getComponent();
             // this.initData();
             // this.initPositions();
         },
         methods: {
+            getComponent(){
+                this.getRequest('/component/basic/getAllComponent').then(resp=>{
+                    if(resp){
+                        console.log(resp.obj)
+                        this.danoptions = resp.obj
+                    }
+                })
+            },
             onSuccess() {
                 this.importDataBtnIcon = 'el-icon-upload2';
                 this.importDataBtnText = '导入数据';
@@ -638,7 +636,7 @@
             exportData() {
                 // this.downloadRequest('/employee/basic/export');
                 this.putRequest('/component/basic/getComponents').then(resp => {
-                    console.log(resp)
+                    console.log(resp[0].name)
                 })
             },
             showEditEmpView(data) {
@@ -848,6 +846,9 @@
                         this.total = resp.total
                     }
                 })
+            },
+            getChanged(){
+                console.log('Get Changed')
             },
         handleClick(tab, event) {
       console.log(tab, event)

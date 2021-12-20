@@ -17,8 +17,6 @@ import java.io.IOException;
 
 /**
  * JWT登录授权过滤器
- *
- * @author zhoubin
  * @since 1.0.0
  */
 public class JwtAuthencationTokenFilter extends OncePerRequestFilter {
