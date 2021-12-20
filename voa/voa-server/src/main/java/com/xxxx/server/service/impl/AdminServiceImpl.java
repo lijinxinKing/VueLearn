@@ -130,8 +130,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
      * @return
      */
     @Override
-    public List<Admin> getAllAdmins(String keywords) {
-        return null;
+    public List<Admin> getAllAdmins(Admin admin,String keywords) {
+        Integer id =  admin.getId();
+        return adminMapper.getAllAdmins(id,keywords);
     }
 
     /**
