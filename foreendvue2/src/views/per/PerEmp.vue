@@ -22,18 +22,19 @@
                     <el-row style="width: 300px;margin-top: 10px"/>
                 <div>
                 <template>
-                 <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+                 <!-- <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+                     <el-tab-pane /> 
                    <el-tab-pane label="Vantage" name="Vantage"></el-tab-pane>
                    <el-tab-pane label="TPNDA" name="TPNDA"></el-tab-pane>
                    <el-tab-pane label="Utility" name="Utility"></el-tab-pane>
                    <el-tab-pane label="Lenovo Smartkey" name="Lenovo Smartkey"></el-tab-pane>
-                 </el-tabs>
+                 </el-tabs> -->
                 </template>
                 <el-row style="width: 300px;margin-top: 10px"/>
                 <!-- @change="handleRadioChanges(index,opt.label)" -->
                 <el-radio-group v-model="componentId" @change="getChanged()">
-                  <el-radio v-for="opt in danoptions" border :key="opt.label" :label="opt.label">
-                    {{opt.value}}
+                  <el-radio v-for="opt in danoptions" border :key="opt.id" :label="opt.name">
+                    {{opt.name}}
                   </el-radio>
                 </el-radio-group>
               </div>
@@ -552,16 +553,24 @@
                     reportAddress: []
                 },
         ComponentData:[
-              { label: 1, value: 'HardWare Settings' },
-              { label: 5, value: 'Gaming' },
-              { label: 2, value: 'ITS' },
-              { label: 6, value: 'DPM' }
+            //   { label: 1, value: 'HardWare Settings' },
+            //   { label: 5, value: 'Gaming' },
+            //   { label: 2, value: 'ITS' },
+            //   { label: 6, value: 'DPM' }
         ],
         danoptions: [
-            { label: 'id', value: 'name' }
+            { commnets: '', 
+              depPath: '',
+              enabled:true,
+              id:0,
+              isParent:false,
+              name:'',
+              parentId:'',
+              result:null
+             }
             ],
           radioIndex: 0,
-          componentId: 100,
+          componentId: 0,
                 rules: {
                     name: [{required: true, message: '请输入员工姓名', trigger: 'blur'}],
                     gender: [{required: true, message: '请输入员工性别', trigger: 'blur'}],
@@ -612,8 +621,10 @@
             getComponent(){
                 this.getRequest('/component/basic/getAllComponent').then(resp=>{
                     if(resp){
+                        console.log(resp)
                         console.log(resp.obj)
                         this.danoptions = resp.obj
+                        console.log(this.danoptions[0].name)
                     }
                 })
             },
