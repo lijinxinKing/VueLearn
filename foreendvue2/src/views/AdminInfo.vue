@@ -16,6 +16,7 @@
                              style="height: 100px;width: 100px;border-radius: 50px"
                              alt="">
                     </el-upload>
+
                 </div>
                 <div>
                     电话号码：
@@ -104,6 +105,7 @@
 
 <script>
     export default {
+        name: "AdminInfo",
         data() {
             var validatePass = (rule, value, callback) => {
                 if (value === '') {
@@ -209,10 +211,9 @@
                 this.getRequest('/admin/info').then(resp => {
                     if (resp) {
                         this.admin = resp;
-                        console.log(this.admin.name)
                         this.admin2 = Object.assign({}, this.admin);
                         window.sessionStorage.setItem('user', JSON.stringify(resp));
-                        // this.$store.commit('INIT_ADMIN', resp);
+                        this.$store.commit('INIT_ADMIN', resp);
                     }
                 })
             }

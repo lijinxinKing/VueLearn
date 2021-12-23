@@ -2,30 +2,37 @@
     <div>
         <el-container>
             <el-header class="homeHeader">
-                <div class="title">联想自动化</div>
-                <el-dropdown @command="handleClick">
-                    <span class="el-dropdown-link">
-                        <i class="el-icon-bell" icon="el-icon-bell"/>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
-                        <el-dropdown-item command="settings">设置</el-dropdown-item>
-                        <el-dropdown-item command="logout">注销登录</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                <div class="title">联想自动化系统</div>
+                <div>
+                    <el-button icon="el-icon-bell"
+                               type="text"
+                               size="normal"
+                               style="margin-right: 8px;color: black"
+                               ></el-button>
+                    <el-dropdown class="userInfo" @command="commandHandler">
+                      <span class="el-dropdown-link">
+                        {{user.name}}<i><img :src="user.userFace"></i>
+                      </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
+                            <el-dropdown-item command="setting">设置</el-dropdown-item>
+                            <el-dropdown-item command="logout">注销登录</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </div>
             </el-header>
             <el-container>
                 <el-aside width="200px">
                     <el-menu router unique-opened>
-                        <el-submenu 
-                        :index="index+''" 
-                        v-for="(item,index) in routes" 
-                        :key="index">
+                        <el-submenu :index="index+''"
+                                    v-for="(item,index) in routes" :key="index">
                             <template slot="title">
                                 <i :class="item.iconCls" style="color: #1accff;margin-right: 5px"></i>
                                 <span>{{item.name}}</span>
                             </template>
-                            <el-menu-item :index="children.path" v-for=" (children,indexj) in item.children" :key="indexj">{{children.name}} 
+                            <el-menu-item :index="children.path"
+                                          v-for="(children,indexj) in item.children" :key="indexj">
+                                {{children.name}}
                             </el-menu-item>
                         </el-submenu>
                     </el-menu>
@@ -37,7 +44,7 @@
                         <el-breadcrumb-item>{{this.$router.currentRoute.name}}</el-breadcrumb-item>
                     </el-breadcrumb>
                     <div class="homeWelcome" v-if="this.$router.currentRoute.path=='/home'">
-                        欢迎使用联想自动化管理系统！
+                        欢迎来到联想自动化系统！
                     </div>
                     <router-view class="homeRouterView"/>
                 </el-main>
@@ -48,18 +55,25 @@
 
 <script>
     export default {
-        name: 'Home',
+        name: "Home",
+        data() {
+            return {
+                // user: JSON.parse(window.sessionStorage.getItem('user'))
+            }
+        },
         computed: {
             routes() {
-                console.log(this.$store.state.routes)
-                return this.$store.state.routes
+                return this.$store.state.routes;
             },
             user() {
                 return this.$store.state.currentAdmin;
             }
         },
         methods: {
-            handleClick(command) {
+            goChat() {
+                this.$router.push('/chat');
+            },
+            commandHandler(command) {
                 if (command == 'logout') {
                     this.$confirm('此操作将注销登录, 是否继续?', '提示', {
                         confirmButtonText: '确定',
@@ -82,10 +96,8 @@
                         });
                     });
                 }
-                else if (command == 'userinfo') {
+                if (command == 'userinfo') {
                     this.$router.push('/userinfo');
-                }else {
-                    alert("Settings");
                 }
             }
         }
@@ -100,10 +112,6 @@
         justify-content: space-between;
         padding: 0 15px;
         box-sizing: border-box;
-    }
-
-    .homeHeader .userInfo {
-        cursor: pointer;
     }
 
     .homeHeader .title {
@@ -134,7 +142,5 @@
     .homeRouterView {
         margin-top: 10px;
     }
-  .el-icon-arrow-down {
-    font-size: 12px;
-  }
+
 </style>

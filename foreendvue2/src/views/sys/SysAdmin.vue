@@ -129,7 +129,8 @@
                 })
             },
             enabledChange(admin) {
-                this.putRequest('/system/admin/', admin).then(resp => {
+                console.log(admin)
+                this.postRequest('/system/admin/updateAdmin', admin).then(resp => {
                     if (resp) {
                         this.initAdmins();
                     }

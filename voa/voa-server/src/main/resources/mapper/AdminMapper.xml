@@ -49,4 +49,8 @@
         ORDER BY
         a.id
     </select>
+    <!--删除操作员-->
+    <delete id="deleteAdminByAdminId">
+        delete  from t_admin where id=#{adminId}
+    </delete>
 </mapper>

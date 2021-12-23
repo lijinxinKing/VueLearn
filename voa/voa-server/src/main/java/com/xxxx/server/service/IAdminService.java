@@ -74,4 +74,6 @@ public interface IAdminService extends IService<Admin> {
      * @return
      */
     RespBean updateAdminUserFace(String url, Integer id, Authentication authentication);
+
+    RespBean deleteAdminByAdminId(Integer adminId);
 }

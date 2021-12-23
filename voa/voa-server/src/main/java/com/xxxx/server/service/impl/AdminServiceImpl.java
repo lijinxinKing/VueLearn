@@ -6,10 +6,7 @@ import com.xxxx.server.config.security.component.JwtTokenUtil;
 import com.xxxx.server.mapper.AdminMapper;
 import com.xxxx.server.mapper.AdminRoleMapper;
 import com.xxxx.server.mapper.RoleMapper;
-import com.xxxx.server.pojo.Admin;
-import com.xxxx.server.pojo.RegisterParam;
-import com.xxxx.server.pojo.RespBean;
-import com.xxxx.server.pojo.Role;
+import com.xxxx.server.pojo.*;
 import com.xxxx.server.service.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +40,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     private RoleMapper roleMapper;
 
     @Autowired
-    private AdminRoleMapper addAdminRoleMapper;
+    private AdminRoleMapper adminRoleMapper;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -98,7 +95,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         // 注册用户 除 管理员访问到的界面 其他功能界面都可以
         Integer adminId = adminMapper.insert(admin);
         Admin admin1 = adminMapper.selectOne(new QueryWrapper<Admin>().eq("username",registerParam.getLoginid()));
-        Integer result = addAdminRoleMapper.addAdminRole(admin1.getId(), rids);
+        Integer result = adminRoleMapper.addAdminRole(admin1.getId(), rids);
         return RespBean.success("注册成功");
     }
 
@@ -144,6 +141,11 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Override
     @Transactional
     public RespBean updateAdminRole(Integer adminId, Integer[] rids) {
+        adminRoleMapper.delete(new QueryWrapper<AdminRole>().eq("adminId",adminId));
+        Integer result = adminRoleMapper.addAdminRole(adminId,rids);
+        if (rids.length == result){
+            return RespBean.success("更新成功！");
+        }
         return RespBean.error("更新失败！");
     }
 
@@ -190,5 +192,13 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         return RespBean.error("更新失败！");
     }
 
+    @Override
+    public RespBean deleteAdminByAdminId(Integer adminId) {
+        Integer result =  adminMapper.deleteAdminByAdminId(adminId);
+        if (result== 1){
+            return RespBean.success("删除成功");
+        }
+        return RespBean.success("删除失败");
+    }
 
 }
