@@ -168,7 +168,7 @@
             initDeps() {
                 this.getRequest('/component/basic/getAllComponent').then(resp => {
                     if (resp) {
-                        this.deps = resp
+                        this.deps = resp.obj
                     }
                 })
             },

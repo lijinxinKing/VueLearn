@@ -31,12 +31,19 @@
                  </el-tabs> -->
                 </template>
                 <el-row style="width: 300px;margin-top: 10px"/>
-                <!-- @change="handleRadioChanges(index,opt.label)" -->
-                <el-radio-group v-model="componentId" @change="getChanged()">
-                  <el-radio v-for="opt in danoptions" border :key="opt.id" :label="opt.name">
-                    {{opt.name}}
-                  </el-radio>
-                </el-radio-group>
+                <el-tree ref="tree" :indent="7"
+                :expand-on-click-node="false"
+                default-expand-all
+                :data="danoptions" :default-expanded-keys="keyIdArray" 
+                :props="defaultProps" node-key="id">
+                <span slot-scope="{ node, data }">
+                    <el-radio v-model="radio" 
+                            :label="data.id" 
+                            @change="change(data)">
+                            {{ node.label }}
+                    </el-radio>
+                </span>
+              </el-tree>
               </div>
                 </div>
                 <div>
@@ -174,16 +181,6 @@
                         align="left"
                         width="100">
                 </el-table-column>
-                <!-- <el-table-column
-                        prop="currentVersion"
-                        label="版本"
-                        width="70">
-                </el-table-column> -->
-                <!-- <el-table-column
-                        prop="currentServer"
-                        label="服务器"
-                        width="80">
-                </el-table-column> -->
                 <el-table-column
                         prop="machineName"
                         label="机器名称"
@@ -514,10 +511,6 @@
                 importDataBtnText: '导入数据',
                 importDataBtnIcon: 'el-icon-upload2',
                 title: '',
-                defaultProps: {
-                    children: 'children',
-                    label: 'name'
-                },
                 inputDepName: '',
                 allDeps: [],
                 visible: false,
@@ -552,12 +545,11 @@
                     utim: [],
                     reportAddress: []
                 },
-        ComponentData:[
-            //   { label: 1, value: 'HardWare Settings' },
-            //   { label: 5, value: 'Gaming' },
-            //   { label: 2, value: 'ITS' },
-            //   { label: 6, value: 'DPM' }
-        ],
+        ComponentData:[],
+        defaultProps: {
+            children: 'components',
+            label: 'name'
+        },
         danoptions: [
             { commnets: '', 
               depPath: '',
@@ -569,8 +561,13 @@
               result:null
              }
             ],
-          radioIndex: 0,
-          componentId: 0,
+        radio: "",    //  这一行
+        keyIdArray: ["1"],
+        treeData: [],
+        loadingTree: false,
+        checkedList:[],
+        radioIndex: 0,
+        componentId: 0,
                 rules: {
                     name: [{required: true, message: '请输入员工姓名', trigger: 'blur'}],
                     gender: [{required: true, message: '请输入员工性别', trigger: 'blur'}],
@@ -614,17 +611,15 @@
         mounted() {
             this.initEmps();
             this.getComponent();
-            // this.initData();
-            // this.initPositions();
+            this.componentId = this.$store.state.currentAdmin.componentId
+            this.initData();
+            console.log(this.componentId)
         },
         methods: {
             getComponent(){
                 this.getRequest('/component/basic/getAllComponent').then(resp=>{
                     if(resp){
-                        console.log(resp)
-                        console.log(resp.obj)
                         this.danoptions = resp.obj
-                        console.log(this.danoptions[0].name)
                     }
                 })
             },
@@ -633,6 +628,12 @@
                 this.importDataBtnText = '导入数据';
                 this.importDataDisabled = false;
                 this.initEmps();
+            },
+            change(data) {
+                this.checkedList = []
+                this.checkedList[0] = data
+                this.componentId = data.id
+                this.initData();
             },
             onError() {
                 this.importDataBtnIcon = 'el-icon-upload2';
@@ -731,7 +732,8 @@
                 // })
             },
             initData() {
-                this.getRequest('/component/basic/selectComponentMachine?id=1').then(resp => {
+                console.log(this.componentId)
+                this.getRequest('/component/basic/selectComponentMachine/?componentId=' + this.componentId).then(resp => {
                     this.emps = resp
                 })
                 if (!window.sessionStorage.getItem('nations')) {

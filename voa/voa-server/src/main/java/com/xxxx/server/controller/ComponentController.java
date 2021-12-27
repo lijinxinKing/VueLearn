@@ -1,6 +1,5 @@
 package com.xxxx.server.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xxxx.server.pojo.*;
 import com.xxxx.server.service.ICommentMachineService;
 import com.xxxx.server.service.IComponentsService;
@@ -10,9 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/component/basic")
@@ -28,8 +25,8 @@ public class ComponentController {
     private AdminServiceImpl adminService;
 
     @ApiOperation(value = "通过id查询机器列表")
-    @RequestMapping("/selectComponentMachine/{componentId}")
-    public List<ComponentMachine> getMenusByAdminId(int componentId){
+    @RequestMapping("/selectComponentMachine/")
+    public List<ComponentMachine> getMenusByAdminId(@RequestParam(defaultValue = "1")int componentId){
         return commentMachineService.SelectAllMachineByFKid(componentId);
     }
 
@@ -51,7 +48,6 @@ public class ComponentController {
     public RespBean getAllComponents() {
         int componentId = AdminUtils.getCurrentAdmin().getComponentId();
         List<Components> result = componentsService.getAllComponents(componentId);
-        System.out.println(result.size());
         return RespBean.success("获取成功",result);
     }
 

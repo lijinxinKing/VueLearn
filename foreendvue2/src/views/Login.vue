@@ -163,9 +163,12 @@ import lenovologo from '@/assets/group_images/LenovoLogo.png'
                         this.postRequest('/login', this.loginForm).then(resp => {
                             this.loading = false
                             if (resp) {
-                                const tokenStr = resp.obj.tokenHead+resp.obj.token
-                                window.sessionStorage.setItem('tokenStr', tokenStr)
-                                this.$router.replace('/home')
+                              //存储用户token
+                              const tokenStr = resp.obj.tokenHead + resp.obj.token;
+                              window.sessionStorage.setItem('tokenStr', tokenStr);
+                              //页面跳转
+                              let path = this.$route.query.redirect;
+                              this.$router.replace((path == '/' || path == undefined) ? '/home' : path);
                             }
                         })
                     } else {
