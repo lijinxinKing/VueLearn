@@ -3,12 +3,12 @@
         <el-container>
             <el-header class="homeHeader">
                 <div class="title">联想自动化系统</div>
-                <div>
-                    <el-button icon="el-icon-bell"
+                <div style="margin-top: 5px">
+                    <!-- <el-button icon="el-icon-bell"
                                type="text"
                                size="normal"
                                style="margin-right: 8px;color: black"
-                               ></el-button>
+                               ></el-button> -->
                     <el-dropdown class="userInfo" @command="commandHandler">
                       <span class="el-dropdown-link">
                         {{user.name}}<i><img :src="user.userFace"></i>

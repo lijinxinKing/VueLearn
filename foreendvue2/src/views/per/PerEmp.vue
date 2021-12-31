@@ -21,19 +21,9 @@
                     </el-button>
                     <el-row style="width: 300px;margin-top: 10px"/>
                 <div>
-                <template>
-                 <!-- <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-                     <el-tab-pane /> 
-                   <el-tab-pane label="Vantage" name="Vantage"></el-tab-pane>
-                   <el-tab-pane label="TPNDA" name="TPNDA"></el-tab-pane>
-                   <el-tab-pane label="Utility" name="Utility"></el-tab-pane>
-                   <el-tab-pane label="Lenovo Smartkey" name="Lenovo Smartkey"></el-tab-pane>
-                 </el-tabs> -->
-                </template>
                 <el-row style="width: 300px;margin-top: 10px"/>
                 <el-tree ref="tree" :indent="7"
                 :expand-on-click-node="false"
-                default-expand-all
                 :data="danoptions" :default-expanded-keys="keyIdArray" 
                 :props="defaultProps" node-key="id">
                 <span slot-scope="{ node, data }">
@@ -47,22 +37,6 @@
               </div>
                 </div>
                 <div>
-                    <el-upload
-                            style="display: inline-flex;margin-right: 8px"
-                            :headers="headers"
-                            :show-file-list="false"
-                            :before-upload="beforeUpload"
-                            :on-success="onSuccess"
-                            :on-error="onError"
-                            :disbaled="importDataDisabled"
-                            action=""> <!-- /employee/basic/import -->
-                        <el-button type="success" :icon="importDataBtnIcon" :disabled="importDataDisabled">
-                            {{importDataBtnText}}
-                        </el-button>
-                    </el-upload>
-                    <el-button @click="exportData" type="success" icon="el-icon-download">
-                        列出Component
-                    </el-button>
                     <el-button type="primary" icon="el-icon-plus" @click="showAddEmpView">添加机器</el-button>
                 </div>
             </div>
@@ -70,11 +44,10 @@
         <transition name="slide-fade">
             <div v-show="showAdvanceSearchVisible"
                  style="border: 1px solid #409eff;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px">
-                <el-row>
-                    <!-- :model="formInline" -->
+            <el-row>
               <el-form :inline="true"  class="demo-form-inline" style="margin-top: 20px">
                 <el-col>
-                                  <el-form-item>
+                <el-form-item >
                   <el-button
                     type="primary"
                     style="margin-right:0.5cm;"
@@ -155,69 +128,73 @@
                         prop="id"
                         label="id"
                         fixed
-                        align="left"
+                        align="center"
                         width="90">
                 </el-table-column>
                 <el-table-column
                         prop="fkComponent"
-                        label="工号"
-                        align="left"
+                        label="项目名称"
+                        align="center"
                         width="85">
                 </el-table-column>
                 <el-table-column
                         prop="isOk"
                         label="连接状态"
+                        align="center"
                         width="50">
                 </el-table-column>
                 <el-table-column
                         prop="isIdle"
                         label="空闲状态"
-                        align="left"
+                        align="center"
                         width="95">
                 </el-table-column>
                 <el-table-column
                         prop="user"
                         label="使用人"
-                        align="left"
+                        align="center"
                         width="100">
                 </el-table-column>
                 <el-table-column
                         prop="machineName"
                         label="机器名称"
+                        align="center"
                         width="100">
                 </el-table-column>
                 <el-table-column
                         prop="ip"
                         label="IP地址"
-                        align="left"
+                        align="center"
                         width="120">
                 </el-table-column>
                 <el-table-column
                         prop="connected"
-                        label="连接状态"
-                        align="left"
+                        label="设备名称"
+                        align="center"
                         width="100">
                 </el-table-column>
                 <el-table-column
                         prop="running"
                         label="运行"
-                        align="left"
+                        align="center"
                         width="50">
                 </el-table-column>
                 <el-table-column
                         prop="ctime"
                         label="开始日期"
-                        align="left"
+                        align="center"
                         width="150">
                 </el-table-column>
                 <el-table-column
                         prop="utime"
                         label="结束日期"
+                        align="center"
                         width="150">
                 </el-table-column>
                 <el-table-column
                         prop="reportAddress1"
                         label="报告地址"
+                        align="center"
                         width="100">
                 </el-table-column>
                 <el-table-column
@@ -226,7 +203,7 @@
                         width="200">
                     <template slot-scope="scope">
                         <el-button @click="showEditEmpView(scope.row)" style="padding: 3px" size="mini">编辑</el-button>
-                        <el-button style="padding: 3px" size="mini" type="primary">查看高级资料</el-button>
+                        <el-button @click="showEditEmpView(scope.row)" style="padding: 3px" size="mini" type="primary">查看高级资料</el-button>
                         <el-button @click="deleteEmp(scope.row)" style="padding: 3px" size="mini" type="danger">删除
                         </el-button>
                     </template>
@@ -611,9 +588,9 @@
         mounted() {
             this.initEmps();
             this.getComponent();
+            //根据用户 项目 Id 初始化 表格
             this.componentId = this.$store.state.currentAdmin.componentId
             this.initData();
-            console.log(this.componentId)
         },
         methods: {
             getComponent(){
@@ -652,10 +629,10 @@
                 })
             },
             showEditEmpView(data) {
-                this.title = '编辑员工信息';
+                this.title = '编辑信息';
                 this.emp = data;
                 this.inputDepName = data.department.name;
-                this.initPositions();
+                // this.initPositions();
                 this.dialogVisible = true;
             },
             deleteEmp(data) {
@@ -795,34 +772,39 @@
                     user: ''
                 };
                 this.inputDepName = '';
-                this.getMaxWorkID();
-                this.initPositions();
+                // this.getMaxWorkID();
+                // this.initPositions();
                 this.dialogVisible = true;
             },
             onEventClick(event) {
-                if (this.machines.length === 0) {
+                if (this.emps.size === 0) {
                 this.runSelectionMessage()
                 return null
             }
-            if (this.runMachines.length === 0) {
-                this.warningMessage()
-                return null
-            }
-            this.runMachinesType.runType = event.target.innerText
-            this.runMachinesType.machines = this.runMachines
+            // if (this.runMachines.length === 0) {
+            //     this.warningMessage()
+            //     return null
+            // }
             console.log(event.target.innerText)
             this.historyLoading = true
-            const requestUrl = 'autotest/runMachinesType/?'
-            this.getRequest(requestUrl)
-            this.$store
-                .dispatch('autotest/runMachinesType', this.runMachinesType)
-                .then(data => {
-                this.tableDatas = data
-                this.historyLoading = false
-                console.log(this.tableDatas)
-                }).catch(err => {
-                console.log(err)
-                })
+            const requestUrl = 'autotest/runMachinesType/?ips='
+            //把字符串中所有 换成
+            //let reg = new RegExp(' ','g')
+            // let runtype = event.target.innerText
+            // let newMsg = JSON.stringify(runtype).replace(reg,'');
+            let url = requestUrl + this.emps + '&runType=test';
+            this.postRequest(url).then(resp=>{
+                console.log(resp)
+            })
+            // this.$store
+            //     .dispatch(url)
+            //     .then(data => {
+            //     this.tableDatas = data
+            //     this.historyLoading = false
+            //     console.log(this.tableDatas)
+            //     }).catch(err => {
+            //     console.log(err)
+            //     })
             },
             initEmps() {
                 this.loading = true;
